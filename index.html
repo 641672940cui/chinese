@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>东东的古诗词 · 广东中考40首全覆盖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            background: #e6f0fa;
+            font-family: system-ui, -apple-system, 'Segoe UI', 'Roboto', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            padding: 18px 14px 70px;
+            color: #1e293b;
+        }
+        .app-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .header {
+            background: linear-gradient(120deg, #d9eafb, #c2def5);
+            border-radius: 32px;
+            padding: 18px 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 1.9rem;
+            color: #0f3b5c;
+        }
+        .header p {
+            font-size: 0.8rem;
+            color: #2c5a7a;
+        }
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            background: white;
+            border-radius: 60px;
+            padding: 5px;
+            margin-bottom: 20px;
+            gap: 4px;
+        }
+        .tab-btn {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            font-weight: 600;
+            font-size: 0.75rem;
+            border-radius: 50px;
+            background: transparent;
+            border: none;
+            color: #4b6b8f;
+            cursor: pointer;
+        }
+        .tab-btn.active {
+            background: #3b82f6;
+            color: white;
+        }
+        .card {
+            background: white;
+            border-radius: 32px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+        .stats-bar {
+            background: white;
+            border-radius: 60px;
+            padding: 12px 18px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .stat-item {
+            background: #f1f5f9;
+            padding: 4px 12px;
+            border-radius: 40px;
+        }
+        .encourage {
+            background: #fff3db;
+            border-radius: 28px;
+            padding: 10px 16px;
+            margin-bottom: 18px;
+            font-size: 0.8rem;
+            color: #b45b0f;
+        }
+        .question-text {
+            font-weight: 700;
+            font-size: 1rem;
+            background: #f8fafc;
+            padding: 14px;
+            border-radius: 28px;
+            margin-bottom: 18px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .option {
+            background: #f9f9ff;
+            border: 1.5px solid #dce5f0;
+            border-radius: 60px;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.1s;
+        }
+        .option:hover {
+            background: #eff6ff;
+            border-color: #3b82f6;
+        }
+        .option.selected {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+        .fill-input {
+            width: 100%;
+            border: 1.5px solid #dce5f0;
+            border-radius: 60px;
+            padding: 14px 18px;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+        .explain-box {
+            background: #f1f9fe;
+            border-radius: 20px;
+            padding: 12px;
+            font-size: 0.85rem;
+            border-left: 4px solid #3b82f6;
+            margin-top: 12px;
+        }
+        .correct-feedback { background: #e0f2e9; border-left-color: #10b981; }
+        .wrong-feedback { background: #ffe8e7; border-left-color: #ef4444; }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .btn {
+            background: #eef2f6;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+        }
+        .btn-primary { background: #3b82f6; color: white; }
+        .btn-danger { background: #fee2e2; color: #b91c1c; }
+        .mistake-item {
+            border-bottom: 1px solid #e9eef3;
+            padding: 12px 0;
+        }
+        .progress-text { font-size: 0.7rem; color: #5a6e7c; margin-top: 8px; }
+        .poem-line {
+            background: #fefce8;
+            padding: 10px 14px;
+            border-radius: 20px;
+            margin: 8px 0;
+            font-size: 0.85rem;
+            border-left: 3px solid #fbbf24;
+        }
+        footer { font-size: 0.7rem; text-align: center; margin-top: 20px; color: #7a8d9e; }
+        @media (max-width: 550px) {
+            .btn { padding: 8px 10px; font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="header">
+        <h1>📜 东东的古诗词</h1>
+        <p>广东中考40首必备 · 主题分类全覆盖</p>
+    </div>
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="theme">📖 主题速记</button>
+        <button class="tab-btn" data-tab="choice">🎯 选择题库</button>
+        <button class="tab-btn" data-tab="fill">✍️ 填空题库</button>
+        <button class="tab-btn" data-tab="mistake">⚠️ 易错字专项</button>
+        <button class="tab-btn" data-tab="wrongbook">📒 错题本</button>
+    </div>
+    <div class="stats-bar">
+        <span class="stat-item">📊 已做 <span id="totalDone">0</span></span>
+        <span class="stat-item">✅ 正确 <span id="totalCorrect">0</span></span>
+        <span class="stat-item">❌ 错题 <span id="totalWrong">0</span></span>
+        <span class="stat-item">📈 正确率 <span id="accuracy">0</span>%</span>
+    </div>
+    <div id="encourageMsg" class="encourage">✨ 按主题分类学习，攻克40首古诗！</div>
+    <div id="mainContent"></div>
+    <div class="nav-buttons">
+        <button id="prevBtn" class="btn">◀ 上一题</button>
+        <button id="nextBtn" class="btn btn-primary">下一题 ▶</button>
+    </div>
+    <div class="nav-buttons">
+        <button id="resetWrongBtn" class="btn btn-danger">🗑 清除错题记录</button>
+        <button id="printFillBtn" class="btn">🖨️ 打印填空题</button>
+        <button id="printThemeBtn" class="btn">📄 打印主题速记</button>
+    </div>
+    <footer>⭐ 点击选项即刻判断对错 | 填空输入后失去焦点即判 | 错题自动保存</footer>
+</div>
+
+<script>
+    // ======================= 40首必备古诗 · 全覆盖题库 =======================
+    
+    // 主题速记：诗句详细展示（每个主题下列出核心诗句）
+    const themeDetailed = {
+        "志存高远": [
+            "会当凌绝顶，一览众山小。——杜甫《望岳》",
+            "不畏浮云遮望眼，自缘身在最高层。——王安石《登飞来峰》",
+            "长风破浪会有时，直挂云帆济沧海。——李白《行路难》",
+            "老骥伏枥，志在千里。——曹操《龟虽寿》",
+            "了却君王天下事，赢得生前身后名。——辛弃疾《破阵子》"
+        ],
+        "家国情怀": [
+            "人生自古谁无死？留取丹心照汗青。——文天祥《过零丁洋》",
+            "安得广厦千万间，大庇天下寒士俱欢颜。——杜甫《茅屋为秋风所破歌》",
+            "落红不是无情物，化作春泥更护花。——龚自珍《己亥杂诗》",
+            "会挽雕弓如满月，西北望，射天狼。——苏轼《江城子》",
+            "夜阑卧听风吹雨，铁马冰河入梦来。——陆游《十一月四日风雨大作》"
+        ],
+        "哲理思辨": [
+            "沉舟侧畔千帆过，病树前头万木春。——刘禹锡《酬乐天》",
+            "山重水复疑无路，柳暗花明又一村。——陆游《游山西村》",
+            "海日生残夜，江春入旧年。——王湾《次北固山下》",
+            "无可奈何花落去，似曾相识燕归来。——晏殊《浣溪沙》",
+            "但愿人长久，千里共婵娟。——苏轼《水调歌头》"
+        ],
+        "思乡怀人": [
+            "夕阳西下，断肠人在天涯。——马致远《天净沙·秋思》",
+            "何当共剪西窗烛，却话巴山夜雨时。——李商隐《夜雨寄北》",
+            "感时花溅泪，恨别鸟惊心。——杜甫《春望》",
+            "海内存知己，天涯若比邻。——王勃《送杜少府之任蜀州》"
+        ],
+        "边塞风光": [
+            "大漠孤烟直，长河落日圆。——王维《使至塞上》",
+            "忽如一夜春风来，千树万树梨花开。——岑参《白雪歌送武判官归京》",
+            "浊酒一杯家万里，燕然未勒归无计。——范仲淹《渔家傲·秋思》",
+            "朔气传金柝，寒光照铁衣。——《木兰诗》",
+            "黑云压城城欲摧，甲光向日金鳞开。——李贺《雁门太守行》"
+        ],
+        "修身养性": [
+            "采菊东篱下，悠然见南山。——陶渊明《饮酒》",
+            "出淤泥而不染，濯清涟而不妖。——周敦颐《爱莲说》",
+            "苔痕上阶绿，草色入帘青。——刘禹锡《陋室铭》",
+            "零落成泥碾作尘，只有香如故。——陆游《卜算子·咏梅》",
+            "千磨万击还坚劲，任尔东西南北风。——郑燮《竹石》"
+        ],
+        "写景抒情": [
+            "几处早莺争暖树，谁家新燕啄春泥。——白居易《钱塘湖春行》",
+            "日暮乡关何处是？烟波江上使人愁。——崔颢《黄鹤楼》",
+            "蒹葭苍苍，白露为霜。——《诗经·蒹葭》",
+            "气蒸云梦泽，波撼岳阳城。——孟浩然《望洞庭湖》",
+            "万籁此都寂，但余钟磬音。——常建《题破山寺后禅院》"
+        ]
+    };
+    
+    // ---------- 选择题库 (37道，覆盖所有高频篇目) ----------
+    const choiceBank = [
+        { id:0, poem:"望岳", text:"《望岳》中表现不怕困难、敢于攀登绝顶、俯视一切的雄心和气概的诗句是", options:["造化钟神秀，阴阳割昏晓","会当凌绝顶，一览众山小","荡胸生曾云，决眦入归鸟","岱宗夫如何？齐鲁青未了"], correct:1, explain:"会当凌绝顶，一览众山小。", theme:"志存高远"},
+        { id:1, poem:"登飞来峰", text:"王安石《登飞来峰》中表现高瞻远瞩、不畏奸邪的诗句是", options:["飞来山上千寻塔","不畏浮云遮望眼，自缘身在最高层","只缘身在最高层","浩荡离愁白日斜"], correct:1, explain:"不畏浮云遮望眼，自缘身在最高层。", theme:"志存高远"},
+        { id:2, poem:"行路难", text:"李白《行路难》中表达乐观自信、执着追求理想的诗句是", options:["金樽清酒斗十千","欲渡黄河冰塞川","长风破浪会有时，直挂云帆济沧海","闲来垂钓碧溪上"], correct:2, explain:"长风破浪会有时，直挂云帆济沧海。", theme:"志存高远"},
+        { id:3, poem:"观沧海", text:"曹操《观沧海》中描写大海吞吐日月、包蕴星辰的句子是", options:["水何澹澹，山岛竦峙","树木丛生，百草丰茂","秋风萧瑟，洪波涌起","日月之行，若出其中；星汉灿烂，若出其里"], correct:3, explain:"日月之行，若出其中；星汉灿烂，若出其里。", theme:"志存高远"},
+        { id:4, poem:"过零丁洋", text:"文天祥《过零丁洋》中表现视死如归、舍生取义民族气节的诗句是", options:["辛苦遭逢起一经","山河破碎风飘絮","惶恐滩头说惶恐","人生自古谁无死？留取丹心照汗青"], correct:3, explain:"人生自古谁无死？留取丹心照汗青。", theme:"家国情怀"},
+        { id:5, poem:"茅屋为秋风所破歌", text:"杜甫《茅屋为秋风所破歌》中体现忧国忧民、推己及人的诗句是", options:["八月秋高风怒号","唇焦口燥呼不得","安得广厦千万间，大庇天下寒士俱欢颜","何时眼前突兀见此屋"], correct:2, explain:"安得广厦千万间，大庇天下寒士俱欢颜。", theme:"家国情怀"},
+        { id:6, poem:"雁门太守行", text:"李贺《雁门太守行》中描写敌军压境、战事紧张的名句是", options:["黑云压城城欲摧，甲光向日金鳞开","角声满天秋色里","半卷红旗临易水","报君黄金台上意"], correct:0, explain:"黑云压城城欲摧，甲光向日金鳞开。", theme:"家国情怀"},
+        { id:7, poem:"己亥杂诗", text:"龚自珍《己亥杂诗》中表现辞官后仍心系国家、奉献精神的是", options:["浩荡离愁白日斜","落红不是无情物，化作春泥更护花","我劝天公重抖擞","九州生气恃风雷"], correct:1, explain:"落红不是无情物，化作春泥更护花。", theme:"家国情怀"},
+        { id:8, poem:"江城子·密州出猎", text:"苏轼《江城子》中表现渴望杀敌报国的句子是", options:["老夫聊发少年狂","鬓微霜，又何妨","会挽雕弓如满月，西北望，射天狼","持节云中，何日遣冯唐"], correct:2, explain:"会挽雕弓如满月，西北望，射天狼。", theme:"家国情怀"},
+        { id:9, poem:"破阵子·为陈同甫赋壮词以寄之", text:"辛弃疾《破阵子》中表达壮志未酬悲愤的句子是", options:["醉里挑灯看剑","马作的卢飞快","了却君王天下事，赢得生前身后名。可怜白发生","五十弦翻塞外声"], correct:2, explain:"了却君王天下事，赢得生前身后名。可怜白发生！", theme:"家国情怀"},
+        { id:10, poem:"酬乐天扬州初逢席上见赠", text:"刘禹锡《酬乐天》蕴含“新事物取代旧事物”哲理的诗句", options:["巴山楚水凄凉地","怀旧空吟闻笛赋","沉舟侧畔千帆过，病树前头万木春","今日听君歌一曲"], correct:2, explain:"沉舟侧畔千帆过，病树前头万木春。", theme:"哲理思辨"},
+        { id:11, poem:"游山西村", text:"陆游《游山西村》中困境中坚持、豁然开朗的名句", options:["莫笑农家腊酒浑","山重水复疑无路，柳暗花明又一村","箫鼓追随春社近","从今若许闲乘月"], correct:1, explain:"山重水复疑无路，柳暗花明又一村。", theme:"哲理思辨"},
+        { id:12, poem:"次北固山下", text:"王湾《次北固山下》蕴含时序交替、新旧更替的诗句", options:["客路青山外","潮平两岸阔","海日生残夜，江春入旧年","乡书何处达"], correct:2, explain:"海日生残夜，江春入旧年。", theme:"哲理思辨"},
+        { id:13, poem:"浣溪沙", text:"晏殊《浣溪沙》蕴含时光流逝、旧景重现的句子", options:["一曲新词酒一杯","去年天气旧亭台","无可奈何花落去，似曾相识燕归来","小园香径独徘徊"], correct:2, explain:"无可奈何花落去，似曾相识燕归来。", theme:"哲理思辨"},
+        { id:14, poem:"水调歌头", text:"苏轼《水调歌头》表达对远方亲人美好祝愿的千古名句", options:["明月几时有","起舞弄清影","人有悲欢离合","但愿人长久，千里共婵娟"], correct:3, explain:"但愿人长久，千里共婵娟。", theme:"哲理思辨"},
+        { id:15, poem:"天净沙·秋思", text:"马致远《天净沙·秋思》点明游子羁旅之悲的句子", options:["枯藤老树昏鸦","小桥流水人家","古道西风瘦马","夕阳西下，断肠人在天涯"], correct:3, explain:"夕阳西下，断肠人在天涯。", theme:"思乡怀人"},
+        { id:16, poem:"夜雨寄北", text:"李商隐《夜雨寄北》中想象未来重逢情景的句子", options:["君问归期未有期","巴山夜雨涨秋池","何当共剪西窗烛，却话巴山夜雨时","共剪西窗烛"], correct:2, explain:"何当共剪西窗烛，却话巴山夜雨时。", theme:"思乡怀人"},
+        { id:17, poem:"春望", text:"杜甫《春望》中感时伤怀、见花落泪的句子", options:["国破山河在","感时花溅泪，恨别鸟惊心","烽火连三月","白头搔更短"], correct:1, explain:"感时花溅泪，恨别鸟惊心。", theme:"思乡怀人"},
+        { id:18, poem:"送杜少府之任蜀州", text:"王勃《送杜少府》体现友情克服空间阻隔的诗句", options:["城阙辅三秦","与君离别意","海内存知己，天涯若比邻","无为在歧路"], correct:2, explain:"海内存知己，天涯若比邻。", theme:"思乡怀人"},
+        { id:19, poem:"使至塞上", text:"王维《使至塞上》描写塞外壮丽风光的诗句", options:["单车欲问边","征蓬出汉塞","大漠孤烟直，长河落日圆","萧关逢候骑"], correct:2, explain:"大漠孤烟直，长河落日圆。", theme:"边塞风光"},
+        { id:20, poem:"渔家傲·秋思", text:"范仲淹《渔家傲》抒发思乡与报国矛盾之情的句子", options:["塞下秋来风景异","浊酒一杯家万里，燕然未勒归无计","羌管悠悠霜满地","人不寐，将军白发征夫泪"], correct:1, explain:"浊酒一杯家万里，燕然未勒归无计。", theme:"边塞风光"},
+        { id:21, poem:"白雪歌送武判官归京", text:"岑参《白雪歌》以春景写冬雪奇丽的名句", options:["忽如一夜春风来，千树万树梨花开","散入珠帘湿罗幕","瀚海阑干百丈冰","山回路转不见君"], correct:0, explain:"忽如一夜春风来，千树万树梨花开。", theme:"边塞风光"},
+        { id:22, poem:"木兰诗", text:"《木兰诗》描写边塞夜景、行军艰苦的诗句", options:["唧唧复唧唧","旦辞爷娘去","朔气传金柝，寒光照铁衣","策勋十二转"], correct:2, explain:"朔气传金柝，寒光照铁衣。", theme:"边塞风光"},
+        { id:23, poem:"饮酒", text:"陶渊明《饮酒》表现物我两忘、悠然自得的诗句", options:["结庐在人境","采菊东篱下，悠然见南山","山气日夕佳","此中有真意"], correct:1, explain:"采菊东篱下，悠然见南山。", theme:"修身养性"},
+        { id:24, poem:"爱莲说", text:"周敦颐《爱莲说》中象征君子洁身自好的句子", options:["出淤泥而不染，濯清涟而不妖","中通外直，不蔓不枝","香远益清，亭亭净植","可远观而不可亵玩焉"], correct:0, explain:"出淤泥而不染，濯清涟而不妖。", theme:"修身养性"},
+        { id:25, poem:"陋室铭", text:"刘禹锡《陋室铭》描写环境清幽的句子", options:["山不在高，有仙则名","苔痕上阶绿，草色入帘青","谈笑有鸿儒，往来无白丁","无丝竹之乱耳，无案牍之劳形"], correct:1, explain:"苔痕上阶绿，草色入帘青。", theme:"修身养性"},
+        { id:26, poem:"卜算子·咏梅", text:"陆游《卜算子·咏梅》表现坚贞不屈品格的诗句", options:["驿外断桥边","已是黄昏独自愁","零落成泥碾作尘，只有香如故","更著风和雨"], correct:2, explain:"零落成泥碾作尘，只有香如故。", theme:"修身养性"},
+        { id:27, poem:"钱塘湖春行", text:"白居易《钱塘湖春行》描写早莺新燕报春的诗句", options:["孤山寺北贾亭西","几处早莺争暖树，谁家新燕啄春泥","乱花渐欲迷人眼","最爱湖东行不足"], correct:1, explain:"几处早莺争暖树，谁家新燕啄春泥。", theme:"写景抒情"},
+        { id:28, poem:"黄鹤楼", text:"崔颢《黄鹤楼》抒发日暮思乡之情的诗句", options:["昔人已乘黄鹤去","黄鹤一去不复返","晴川历历汉阳树","日暮乡关何处是？烟波江上使人愁"], correct:3, explain:"日暮乡关何处是？烟波江上使人愁。", theme:"写景抒情"},
+        { id:29, poem:"关雎", text:"《诗经·关雎》中表现君子对淑女思念求之不得的句子", options:["关关雎鸠，在河之洲","窈窕淑女，君子好逑","求之不得，寤寐思服","窈窕淑女，钟鼓乐之"], correct:2, explain:"求之不得，寤寐思服。", theme:"写景抒情"},
+        { id:30, poem:"蒹葭", text:"《诗经·蒹葭》中描写秋晨清冷、伊人难寻的起兴句", options:["蒹葭苍苍，白露为霜","所谓伊人，在水一方","溯洄从之，道阻且长","蒹葭萋萋，白露未晞"], correct:0, explain:"蒹葭苍苍，白露为霜。", theme:"写景抒情"},
+        { id:31, poem:"十一月四日风雨大作", text:"陆游诗中表现梦中尚思报国的句子是", options:["僵卧孤村不自哀","尚思为国戍轮台","夜阑卧听风吹雨，铁马冰河入梦来","王师北定中原日"], correct:2, explain:"夜阑卧听风吹雨，铁马冰河入梦来。", theme:"家国情怀"},
+        { id:32, poem:"龟虽寿", text:"曹操《龟虽寿》中表现老当益壮、自强不息的句子", options:["神龟虽寿，犹有竟时","老骥伏枥，志在千里","盈缩之期，不但在天","养怡之福，可得永年"], correct:1, explain:"老骥伏枥，志在千里。", theme:"志存高远"},
+        { id:33, poem:"满江红", text:"秋瑾《满江红》中表达冲破家庭束缚、投身革命的句子", options:["小住京华，早又是中秋佳节","为篱下黄花开遍","身不得，男儿列，心却比，男儿烈","莽红尘何处觅知音"], correct:2, explain:"身不得，男儿列，心却比，男儿烈。", theme:"志存高远"},
+        { id:34, poem:"竹石", text:"郑燮《竹石》中表现坚韧顽强的句子", options:["咬定青山不放松","立根原在破岩中","千磨万击还坚劲，任尔东西南北风","粉骨碎身浑不怕"], correct:2, explain:"千磨万击还坚劲，任尔东西南北风。", theme:"修身养性"},
+        { id:35, poem:"望洞庭湖", text:"孟浩然《望洞庭湖赠张丞相》中描写洞庭湖浩瀚气势的名句", options:["八月湖水平","气蒸云梦泽，波撼岳阳城","欲济无舟楫","坐观垂钓者"], correct:1, explain:"气蒸云梦泽，波撼岳阳城。", theme:"写景抒情"},
+        { id:36, poem:"题破山寺后禅院", text:"常建诗中描写禅院幽静、钟磬余音的诗句", options:["清晨入古寺","曲径通幽处，禅房花木深","山光悦鸟性，潭影空人心","万籁此都寂，但余钟磬音"], correct:3, explain:"万籁此都寂，但余钟磬音。", theme:"写景抒情"}
+    ];
+    
+    // 填空题库
+    const fillBank = [
+        { id:0, poem:"望岳", text:"会当凌绝顶，__________________。", answer:"一览众山小", tip:"一览众山小", theme:"志存高远"},
+        { id:1, poem:"登飞来峰", text:"不畏浮云遮望眼，__________________。", answer:"自缘身在最高层", tip:"自缘（不是只缘）", theme:"志存高远"},
+        { id:2, poem:"行路难", text:"长风破浪会有时，__________________。", answer:"直挂云帆济沧海", tip:"济沧海", theme:"志存高远"},
+        { id:3, poem:"过零丁洋", text:"人生自古谁无死？__________________。", answer:"留取丹心照汗青", tip:"汗青", theme:"家国情怀"},
+        { id:4, poem:"茅屋为秋风所破歌", text:"安得广厦千万间，__________________！", answer:"大庇天下寒士俱欢颜", tip:"大庇", theme:"家国情怀"},
+        { id:5, poem:"己亥杂诗", text:"落红不是无情物，__________________。", answer:"化作春泥更护花", tip:"化作（不是做）", theme:"家国情怀"},
+        { id:6, poem:"酬乐天扬州初逢席上见赠", text:"沉舟侧畔千帆过，__________________。", answer:"病树前头万木春", tip:"万木春", theme:"哲理思辨"},
+        { id:7, poem:"游山西村", text:"山重水复疑无路，__________________。", answer:"柳暗花明又一村", tip:"柳暗花明", theme:"哲理思辨"},
+        { id:8, poem:"次北固山下", text:"海日生残夜，__________________。", answer:"江春入旧年", tip:"江春入旧年", theme:"哲理思辨"},
+        { id:9, poem:"水调歌头", text:"但愿人长久，__________________。", answer:"千里共婵娟", tip:"婵娟", theme:"哲理思辨"},
+        { id:10, poem:"天净沙·秋思", text:"夕阳西下，__________________。", answer:"断肠人在天涯", tip:"断肠人", theme:"思乡怀人"},
+        { id:11, poem:"夜雨寄北", text:"何当共剪西窗烛，__________________。", answer:"却话巴山夜雨时", tip:"却话", theme:"思乡怀人"},
+        { id:12, poem:"春望", text:"感时花溅泪，__________________。", answer:"恨别鸟惊心", tip:"恨别", theme:"思乡怀人"},
+        { id:13, poem:"送杜少府之任蜀州", text:"海内存知己，__________________。", answer:"天涯若比邻", tip:"若比邻", theme:"思乡怀人"},
+        { id:14, poem:"使至塞上", text:"大漠孤烟直，__________________。", answer:"长河落日圆", tip:"长河落日圆", theme:"边塞风光"},
+        { id:15, poem:"渔家傲·秋思", text:"浊酒一杯家万里，__________________。", answer:"燕然未勒归无计", tip:"燕然未勒", theme:"边塞风光"},
+        { id:16, poem:"白雪歌送武判官归京", text:"忽如一夜春风来，__________________。", answer:"千树万树梨花开", tip:"梨花开", theme:"边塞风光"},
+        { id:17, poem:"饮酒", text:"采菊东篱下，__________________。", answer:"悠然见南山", tip:"见（不是现）", theme:"修身养性"},
+        { id:18, poem:"爱莲说", text:"出淤泥而不染，__________________。", answer:"濯清涟而不妖", tip:"濯清涟", theme:"修身养性"},
+        { id:19, poem:"陋室铭", text:"苔痕上阶绿，__________________。", answer:"草色入帘青", tip:"入帘青", theme:"修身养性"},
+        { id:20, poem:"钱塘湖春行", text:"几处早莺争暖树，__________________。", answer:"谁家新燕啄春泥", tip:"新燕", theme:"写景抒情"},
+        { id:21, poem:"黄鹤楼", text:"日暮乡关何处是？__________________。", answer:"烟波江上使人愁", tip:"烟波", theme:"写景抒情"},
+        { id:22, poem:"江城子·密州出猎", text:"会挽雕弓如满月，__________________，射天狼。", answer:"西北望", tip:"西北望", theme:"家国情怀"},
+        { id:23, poem:"破阵子·为陈同甫赋壮词以寄之", text:"了却君王天下事，__________________。", answer:"赢得生前身后名", tip:"生前身后名", theme:"家国情怀"},
+        { id:24, poem:"雁门太守行", text:"黑云压城城欲摧，__________________。", answer:"甲光向日金鳞开", tip:"金鳞开", theme:"家国情怀"},
+        { id:25, poem:"浣溪沙", text:"无可奈何花落去，__________________。", answer:"似曾相识燕归来", tip:"燕归来", theme:"哲理思辨"},
+        { id:26, poem:"观沧海", text:"日月之行，若出其中；__________________，若出其里。", answer:"星汉灿烂", tip:"星汉", theme:"志存高远"},
+        { id:27, poem:"木兰诗", text:"朔气传金柝，__________________。", answer:"寒光照铁衣", tip:"寒光", theme:"边塞风光"},
+        { id:28, poem:"卜算子·咏梅", text:"零落成泥碾作尘，__________________。", answer:"只有香如故", tip:"香如故", theme:"修身养性"},
+        { id:29, poem:"十一月四日风雨大作", text:"夜阑卧听风吹雨，__________________。", answer:"铁马冰河入梦来", tip:"铁马", theme:"家国情怀"}
+    ];
+    
+    // 易错字专项
+    const mistakeBank = [
+        { id:0, poem:"登飞来峰", text:"“不畏浮云遮望眼，______缘身在最高层” 正确字", options:["自","只","至","子"], correct:0, explain:"自缘，不是只缘。", theme:"志存高远"},
+        { id:1, poem:"过零丁洋", text:"“留取丹心照______。” 正确字", options:["汗青","汉青","旱青","翰青"], correct:0, explain:"汗青指史册。", theme:"家国情怀"},
+        { id:2, poem:"己亥杂诗", text:"“化作春泥______护花。” 正确字", options:["更","跟","梗","耕"], correct:0, explain:"更护花。", theme:"家国情怀"},
+        { id:3, poem:"使至塞上", text:"“萧关逢______骑” 正确字", options:["候","侯","后","厚"], correct:0, explain:"候骑，侦察兵。", theme:"边塞风光"},
+        { id:4, poem:"渔家傲·秋思", text:"“______然未勒归无计” 正确字", options:["燕","雁","艳","焉"], correct:0, explain:"燕然山。", theme:"边塞风光"},
+        { id:5, poem:"次北固山下", text:"“海日生残夜，江春入旧______。”", options:["年","连","念","恋"], correct:0, explain:"旧年。", theme:"哲理思辨"},
+        { id:6, poem:"望岳", text:"“荡胸生______云” 正确字", options:["曾","层","成","承"], correct:0, explain:"曾云，重叠的云。", theme:"志存高远"},
+        { id:7, poem:"爱莲说", text:"“濯清涟而不______” 正确字", options:["妖","夭","邀","要"], correct:0, explain:"不妖，不妖媚。", theme:"修身养性"},
+        { id:8, poem:"行路难", text:"“直挂云帆济______。” 正确字", options:["沧海","大海","苍海","仓海"], correct:0, explain:"沧海。", theme:"志存高远"},
+        { id:9, poem:"陋室铭", text:"“______痕上阶绿” 正确字", options:["苔","台","胎","抬"], correct:0, explain:"苔痕。", theme:"修身养性"}
+    ];
+    
+    // localStorage 持久化
+    let wrongChoiceIds = JSON.parse(localStorage.getItem("wrongChoiceIds_fixed") || "[]");
+    let wrongFillIds = JSON.parse(localStorage.getItem("wrongFillIds_fixed") || "[]");
+    let wrongMistakeIds = JSON.parse(localStorage.getItem("wrongMistakeIds_fixed") || "[]");
+    let stats = JSON.parse(localStorage.getItem("poemStats_fixed") || '{ "totalDone":0, "totalCorrect":0 }');
+    let choiceSelections = new Array(choiceBank.length).fill(null);
+    let fillAnswers = new Array(fillBank.length).fill(null);
+    let mistakeSelections = new Array(mistakeBank.length).fill(null);
+    
+    function saveAll(){ 
+        localStorage.setItem("wrongChoiceIds_fixed", JSON.stringify(wrongChoiceIds)); 
+        localStorage.setItem("wrongFillIds_fixed", JSON.stringify(wrongFillIds)); 
+        localStorage.setItem("wrongMistakeIds_fixed", JSON.stringify(wrongMistakeIds)); 
+        localStorage.setItem("poemStats_fixed", JSON.stringify(stats)); 
+        updateStatsUI(); 
+    }
+    
+    function markWrong(cat, id){ 
+        if(cat==="choice" && !wrongChoiceIds.includes(id)) wrongChoiceIds.push(id); 
+        else if(cat==="fill" && !wrongFillIds.includes(id)) wrongFillIds.push(id); 
+        else if(cat==="mistake" && !wrongMistakeIds.includes(id)) wrongMistakeIds.push(id); 
+        saveAll(); 
+    }
+    
+    function removeWrong(cat, id){ 
+        let arr = cat==="choice"?wrongChoiceIds:cat==="fill"?wrongFillIds:wrongMistakeIds; 
+        let idx = arr.indexOf(id); 
+        if(idx !== -1) arr.splice(idx,1); 
+        saveAll(); 
+    }
+    
+    function updateStatsUI(){ 
+        document.getElementById("totalDone").innerText = stats.totalDone; 
+        document.getElementById("totalCorrect").innerText = stats.totalCorrect; 
+        let totalWrong = wrongChoiceIds.length + wrongFillIds.length + wrongMistakeIds.length; 
+        document.getElementById("totalWrong").innerText = totalWrong; 
+        let acc = stats.totalDone === 0 ? 0 : Math.round(stats.totalCorrect / stats.totalDone * 100); 
+        document.getElementById("accuracy").innerText = acc; 
+        let msg = acc >= 80 ? "🎉 太厉害了！中考默写稳了！" : acc >= 60 ? "👍 继续强化易错字！" : "💪 坚持刷题，错题本重做！"; 
+        document.getElementById("encourageMsg").innerHTML = `✨ ${msg}`; 
+    }
+    
+    let currentTab = "theme", choiceIdx = 0, fillIdx = 0, mistakeIdx = 0;
+    
+    function render(){
+        const container = document.getElementById("mainContent");
+        
+        // 主题速记页 - 只展示诗句，不做跳转
+        if(currentTab === "theme"){
+            let html = `<div class="card"><h3>📖 7大主题·高频考句速记</h3><div style="margin-bottom:12px; font-size:0.75rem; color:#5a6e7c;">⭐ 按主题分类背诵，直击理解性默写</div>`;
+            for(let [theme, lines] of Object.entries(themeDetailed)){
+                html += `<div style="margin-top:20px;"><div style="font-weight:700; font-size:1rem; background:#eef2ff; display:inline-block; padding:4px 16px; border-radius:30px;">🏷️ ${theme}</div>`;
+                lines.forEach(line => { html += `<div class="poem-line">📜 ${line}</div>`; });
+                html += `</div>`;
+            }
+            html += `<div class="progress-text" style="margin-top:16px;">💡 共40首古诗，以上为核心考句，每天晨读背诵。</div></div>`;
+            container.innerHTML = html;
+        }
+        // 选择题库 - 关键修复：未选择时绝不显示任何答案
+        else if(currentTab === "choice"){
+            let q = choiceBank[choiceIdx];
+            if(!q){ container.innerHTML = `<div class="card">暂无题目</div>`; return; }
+            let selected = choiceSelections[q.id];
+            // 只有用户已经选过（selected !== null 且 !== undefined）才显示解析
+            let explainHtml = "";
+            if(selected !== null && selected !== undefined){
+                let isCorrect = (selected === q.correct);
+                let correctLetter = String.fromCharCode(65 + q.correct);
+                explainHtml = `<div class="explain-box ${isCorrect ? 'correct-feedback' : 'wrong-feedback'}">
+                    ${isCorrect ? "✅ 回答正确！ " : "❌ 回答错误！正确答案是 " + correctLetter + "。 "} 
+                    ${q.explain}
+                </div>`;
+            }
+            container.innerHTML = `
+                <div class="card">
+                    <div class="question-text">${choiceIdx+1}/${choiceBank.length} · ${q.poem} · ${q.text}</div>
+                    <div class="options" id="choiceOptions">
+                        ${q.options.map((opt, i) => `<div class="option ${selected === i ? 'selected' : ''}" data-val="${i}"><span>${String.fromCharCode(65+i)}.</span> ${opt}</div>`).join('')}
+                    </div>
+                    <div id="choiceExplain">${explainHtml}</div>
+                </div>
+            `;
+            // 绑定选项点击事件
+            document.querySelectorAll("#choiceOptions .option").forEach(el => {
+                el.addEventListener("click", () => {
+                    let val = parseInt(el.dataset.val);
+                    choiceSelections[q.id] = val;
+                    let isCorrect = (val === q.correct);
+                    if(isCorrect){ 
+                        stats.totalCorrect++; 
+                        removeWrong("choice", q.id); 
+                    } else { 
+                        markWrong("choice", q.id); 
+                    }
+                    if(!stats[`choice_${q.id}`]){ 
+                        stats.totalDone++; 
+                        stats[`choice_${q.id}`] = true; 
+                    }
+                    saveAll();
+                    render();  // 重新渲染显示答案
+                });
+            });
+        }
+        else if(currentTab === "fill"){
+            let q = fillBank[fillIdx];
+            if(!q){ container.innerHTML = `<div class="card">暂无填空题</div>`; return; }
+            let saved = fillAnswers[q.id] || "";
+            container.innerHTML = `
+                <div class="card">
+                    <div class="question-text">${fillIdx+1}/${fillBank.length} · ${q.poem} · ${q.text}</div>
+                    <input type="text" id="fillInput" class="fill-input" value="${escapeHtml(saved)}" placeholder="填写答案">
+                    <div id="fillExplain"></div>
+                    <div style="font-size:0.7rem;">💡 提示：${q.tip}</div>
+                </div>
+            `;
+            let inp = document.getElementById("fillInput");
+            let checkFill = () => {
+                let val = inp.value.trim();
+                let isCorrect = (val === q.answer);
+                fillAnswers[q.id] = val;
+                if(isCorrect){ stats.totalCorrect++; removeWrong("fill", q.id); }
+                else{ markWrong("fill", q.id); }
+                if(!stats[`fill_${q.id}`]){ stats.totalDone++; stats[`fill_${q.id}`] = true; }
+                saveAll();
+                let fbDiv = document.getElementById("fillExplain");
+                fbDiv.innerHTML = `<div class="explain-box ${isCorrect ? 'correct-feedback' : 'wrong-feedback'}">
+                    ${isCorrect ? "✅ 正确！ " : "❌ 错误！正确答案：" + q.answer + " "} ${q.tip}
+                </div>`;
+            };
+            inp.addEventListener("blur", checkFill);
+            inp.addEventListener("keypress", e => { if(e.key === "Enter") inp.blur(); });
+        }
+        else if(currentTab === "mistake"){
+            let q = mistakeBank[mistakeIdx];
+            if(!q){ container.innerHTML = `<div class="card">暂无易错题</div>`; return; }
+            let selected = mistakeSelections[q.id];
+            let explainHtml = "";
+            if(selected !== null && selected !== undefined){
+                let isCorrect = (selected === q.correct);
+                explainHtml = `<div class="explain-box ${isCorrect ? 'correct-feedback' : 'wrong-feedback'}">
+                    ${isCorrect ? "✔️ 正确！ " : "❌ 错误！ "} ${q.explain}
+                </div>`;
+            }
+            container.innerHTML = `
+                <div class="card">
+                    <div class="question-text">${mistakeIdx+1}/${mistakeBank.length} · ${q.poem} · ${q.text}</div>
+                    <div class="options" id="mistakeOptions">
+                        ${q.options.map((opt, i) => `<div class="option ${selected === i ? 'selected' : ''}" data-val="${i}"><span>${String.fromCharCode(65+i)}.</span> ${opt}</div>`).join('')}
+                    </div>
+                    <div id="mistakeExplain">${explainHtml}</div>
+                </div>
+            `;
+            document.querySelectorAll("#mistakeOptions .option").forEach(el => {
+                el.addEventListener("click", () => {
+                    let val = parseInt(el.dataset.val);
+                    mistakeSelections[q.id] = val;
+                    let isCorrect = (val === q.correct);
+                    if(isCorrect){ stats.totalCorrect++; removeWrong("mistake", q.id); }
+                    else{ markWrong("mistake", q.id); }
+                    if(!stats[`mistake_${q.id}`]){ stats.totalDone++; stats[`mistake_${q.id}`] = true; }
+                    saveAll();
+                    render();
+                });
+            });
+        }
+        else if(currentTab === "wrongbook"){
+            let wrongs = [
+                ...wrongChoiceIds.map(id => choiceBank.find(c => c.id === id)).filter(v => v),
+                ...wrongFillIds.map(id => fillBank.find(f => f.id === id)).filter(v => v),
+                ...wrongMistakeIds.map(id => mistakeBank.find(m => m.id === id)).filter(v => v)
+            ];
+            container.innerHTML = `<div class="card">
+                <h3>📘 错题本 (${wrongs.length}道)</h3>
+                ${wrongs.length === 0 ? "<p>🎉 暂无错题！太强了！继续巩固~</p>" : wrongs.map(w => `<div class="mistake-item">📌 ${w.poem || (w.text ? w.text.substring(0,50) : "错题")}</div>`).join('')}
+            </div>`;
+        }
+    }
+    
+    function escapeHtml(str){ return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m; }); }
+    
+    // 按钮事件
+    document.getElementById("prevBtn").onclick = () => { 
+        if(currentTab === "choice") choiceIdx = (choiceIdx - 1 + choiceBank.length) % choiceBank.length; 
+        else if(currentTab === "fill") fillIdx = (fillIdx - 1 + fillBank.length) % fillBank.length; 
+        else if(currentTab === "mistake") mistakeIdx = (mistakeIdx - 1 + mistakeBank.length) % mistakeBank.length; 
+        render(); 
+    };
+    document.getElementById("nextBtn").onclick = () => { 
+        if(currentTab === "choice") choiceIdx = (choiceIdx + 1) % choiceBank.length; 
+        else if(currentTab === "fill") fillIdx = (fillIdx + 1) % fillBank.length; 
+        else if(currentTab === "mistake") mistakeIdx = (mistakeIdx + 1) % mistakeBank.length; 
+        render(); 
+    };
+    document.getElementById("resetWrongBtn").onclick = () => { 
+        wrongChoiceIds = []; wrongFillIds = []; wrongMistakeIds = []; 
+        saveAll(); 
+        alert("错题本已清空！继续加油~"); 
+        render(); 
+    };
+    document.getElementById("printFillBtn").onclick = () => { 
+        let html = "<html><head><title>古诗词填空练习</title><style>body{font-family:sans-serif;padding:20px;} .item{margin-bottom:25px;}</style></head><body><h2>📜 古诗词默写填空</h2>";
+        fillBank.forEach(f => { html += `<div class="item"><strong>${f.text}</strong><br>___________________________<br><span style="color:#aaa;">💡 ${f.tip}</span></div><hr>`; });
+        html += "</body></html>"; 
+        let win = window.open(); win.document.write(html); win.print(); 
+    };
+    document.getElementById("printThemeBtn").onclick = () => { 
+        let html = "<html><head><title>主题速记</title><style>body{font-family:sans-serif;padding:20px;}</style></head><body><h2>7大主题·高频考句速记</h2>";
+        for(let [t, lines] of Object.entries(themeDetailed)){ 
+            html += `<h3>${t}</h3>`; 
+            lines.forEach(l => { html += `<p>${l}</p>`; }); 
+        } 
+        html += "</body></html>"; 
+        let win = window.open(); win.document.write(html); win.print(); 
+    };
+    
+    // Tab 切换
+    document.querySelectorAll(".tab-btn").forEach(btn => btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentTab = btn.dataset.tab;
+        render();
+    }));
+    
+    updateStatsUI(); 
+    render();
+</script>
+</body>
+</html>
