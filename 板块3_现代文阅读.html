@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>板块三 · 现代文阅读 | 手机优化版</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background: #e6f0fa; font-family: system-ui, -apple-system, 'Segoe UI', 'Roboto', 'PingFang SC', sans-serif; padding: 16px 12px 70px; color: #1e293b; }
+        .container { max-width: 700px; margin: 0 auto; }
+        .back-link { display: inline-block; margin-bottom: 16px; background: #d9e8f2; padding: 10px 18px; border-radius: 40px; text-decoration: none; color: #0f5b83; font-weight: 600; font-size: 0.85rem; }
+        .header { background: linear-gradient(135deg, #1e6f9f, #0a4b6e); border-radius: 28px; padding: 20px; margin-bottom: 20px; text-align: center; color: white; }
+        .header h1 { font-size: 1.6rem; margin-bottom: 6px; }
+        .header p { font-size: 0.75rem; opacity: 0.9; }
+        .stats-bar { background: white; border-radius: 60px; padding: 10px 16px; display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 18px; gap: 8px; }
+        .stat-item { background: #f1f5f9; padding: 6px 14px; border-radius: 40px; font-size: 0.7rem; font-weight: 600; color: #1e6f9f; }
+        .card { background: white; border-radius: 28px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .knowledge-box { background: #f1f9fe; border-left: 6px solid #f4c542; border-radius: 20px; padding: 14px 18px; margin-bottom: 20px; cursor: pointer; }
+        .knowledge-content { display: none; padding-top: 12px; font-size: 0.85rem; border-top: 1px solid #cde3ef; margin-top: 8px; line-height: 1.5; }
+        .question-item { margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px dashed #cde3ef; }
+        .q-title { font-weight: 700; margin-bottom: 12px; color: #1e6f9f; background: #f0f7fc; padding: 8px 14px; border-radius: 24px; display: inline-block; font-size: 0.8rem; }
+        .question-text { font-size: 1rem; margin: 12px 0; line-height: 1.5; font-weight: 500; }
+        .options { display: flex; flex-direction: column; gap: 12px; margin: 12px 0; }
+        .option { background: #f9fbfd; border: 1.5px solid #dce5f0; border-radius: 60px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: 0.1s; min-height: 56px; font-size: 0.9rem; }
+        .option.selected-correct { background: #c8f0d1; border-color: #2e7d32; }
+        .option.selected-wrong { background: #ffdede; border-color: #c62828; }
+        .fill-input { width: 100%; border: 1.5px solid #dce5f0; border-radius: 60px; padding: 14px 18px; font-size: 0.95rem; margin-bottom: 12px; }
+        .btn-submit { background: #eef3fc; border: none; padding: 12px 20px; border-radius: 60px; font-size: 0.85rem; font-weight: 600; color: #0f5b83; cursor: pointer; margin-top: 8px; min-height: 48px; }
+        .answer { display: none; background: #f8fbfe; padding: 14px 18px; border-radius: 20px; margin-top: 14px; border-left: 4px solid #1e6f9f; font-size: 0.85rem; line-height: 1.5; }
+        .feedback-msg { font-size: 0.8rem; margin-top: 8px; color: #c26b1a; }
+        .mark-btn { background: none; border: 1px solid #b9cfdf; padding: 8px 14px; border-radius: 40px; font-size: 0.7rem; cursor: pointer; margin-left: 10px; min-height: 40px; }
+        .mark-btn.marked { background: #f4c542; border-color: #e0a800; }
+        .wrong-notes { background: #fff6e8; border-radius: 28px; padding: 18px; margin-top: 30px; }
+        .wrong-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+        .nav-buttons { display: flex; justify-content: space-between; gap: 12px; margin: 20px 0; }
+        .nav-btn { background: #eef2f6; border: none; padding: 12px 20px; border-radius: 60px; font-weight: 600; font-size: 0.85rem; cursor: pointer; flex: 1; text-align: center; min-height: 48px; }
+        .nav-btn-primary { background: #1e6f9f; color: white; }
+        .progress { font-size: 0.7rem; color: #5a6e7c; text-align: center; margin-top: 10px; }
+        @media (max-width: 480px) { .option { padding: 10px 14px; } .btn-submit, .nav-btn { padding: 10px 12px; } }
+        @media print { .btn-submit, .mark-btn, .nav-btn, .knowledge-box, .wrong-notes, .back-link, .stats-bar { display: none; } .answer { display: block !important; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="index.html" class="back-link">← 返回索引主页</a>
+    <div class="header"><h1>🌿 板块三 · 现代文阅读</h1><p>手法选择 | 维度补全 | 作用选择 | 含义理解 | 材料映射法</p></div>
+    <div class="stats-bar"><span class="stat-item">📊 总题数：20</span><span class="stat-item" id="wrongCount">❌ 错题：0</span></div>
+    <div class="card">
+        <div class="knowledge-box" onclick="toggleKnowledge(this)"><div class="q-title" style="background:none; padding:0;">📌 方法论 · 材料映射法（点击展开）</div><div class="knowledge-content"><p>✦ <strong>手法赏析三步：</strong> 修辞/描写判断 + 内容分析（对象+特点） + 情感/主旨</p><p>✦ <strong>环境描写四件套：</strong> 渲染气氛 + 烘托心情 + 推动情节 + 暗示主旨</p><p>✦ <strong>标题含义：</strong> 表层义（具体事物）+ 深层义（象征/主旨）</p><p>✦ <strong>段落作用：</strong> 结构上（承上启下/铺垫/照应）+ 内容上（点明主旨/深化主题）</p></div></div>
+    </div>
+    <div id="questions-container"></div>
+    <div class="nav-buttons"><button id="prevBtn" class="nav-btn">◀ 上一题</button><button id="nextBtn" class="nav-btn nav-btn-primary">下一题 ▶</button></div>
+    <div class="progress" id="progressInfo">第1/20题</div>
+    <div class="wrong-notes" id="wrongPanel"><div class="wrong-header"><strong>📌 我的错题本</strong><button id="clearWrongBtn" style="background:#f0d9c7; border:none; border-radius:30px; padding:6px 16px;">清空错题</button></div><div id="wrongList">暂无错题</div></div>
+</div>
+<script>
+    // 20道现代文阅读题（手法选择6+维度补全6+作用选择4+含义理解4）
+    const questions = [
+        { id:0, type:"choice", text:"“雨打在上面，声音是脆的，像在敲击编钟，层次分明。”这句话运用的修辞手法是？", options:["A. 拟人","B. 比喻","C. 排比","D. 夸张"], correct:"B", explain:"材料映射：出现“像”字标志词 → 比喻修辞。答赏析题需结合语境。" },
+        { id:1, type:"fill", text:"从修辞角度赏析：“他的背影在夕阳下拉得很长，像一座沉默的山。”<br>手法：比喻<br>内容：将背影比作山，生动写出了背影的______和______。<br>情感：表达了作者______之情。", answer:"高大；沉稳；敬佩/怀念", tip:"山象征稳重、高大，情感指向敬佩或怀念", blank:true },
+        { id:2, type:"choice", text:"文中画线句“夜风凛冽，卷起地上的落叶，发出沙沙的响声”属于什么描写？有何作用？", options:["A. 心理描写，表现人物孤独","B. 环境描写，渲染凄凉气氛，烘托人物失落心情","C. 动作描写，推动情节","D. 语言描写，揭示性格"], correct:"B", explain:"环境描写四件套：凛冽→渲染凄凉；烘托心情。" },
+        { id:3, type:"fill", text:"赏析加点词语：“他紧紧地攥着拳头，指节因用力而发白。”<br>“攥”字运用了______描写，生动写出了人物______的心理。", answer:"动作；紧张/愤怒/隐忍", tip:"动作描写揭示内心情感", blank:true },
+        { id:4, type:"choice", text:"下列对标题《背影》理解不正确的一项是？", options:["A. 背影是贯穿全文的线索","B. 背影象征着父爱的深沉与含蓄","C. 背影只指父亲买橘子时的背影","D. 标题设置悬念，吸引读者"], correct:"C", explain:"标题含义：表层指父亲攀爬月台的背影，深层象征父爱。" },
+        { id:5, type:"fill", text:"句子赏析补全：“母亲的白发在灯光下闪着银光，像一根根岁月的琴弦。”<br>手法：______<br>内容：将白发比作琴弦，生动写出______<br>情感：表达了对母亲的______。", answer:"比喻；岁月的流逝/辛劳；心疼/感恩", tip:"比喻+细节→情感升华", blank:true },
+        { id:6, type:"choice", text:"“风里带来些新翻的泥土的气息，混着青草味儿，还有各种花的香。”这一描写的作用是？", options:["A. 表现天气炎热","B. 渲染静谧氛围，烘托作者闲适愉悦心情","C. 推动情节发展","D. 暗示故事结局"], correct:"B", explain:"环境描写烘托心情，渲染宁静愉悦的氛围。" },
+        { id:7, type:"fill", text:"请从描写角度赏析：“他的脸一下子涨得通红，嘴唇微微颤抖，半天说不出话来。”<br>描写方法：______和______描写；<br>作用：生动刻画了人物______的心理。", answer:"神态；动作；激动/羞愧/紧张", tip:"神态+动作组合，高频考点", blank:true },
+        { id:8, type:"choice", text:"下列对文章结尾“她笑了，笑得像春天一样温暖”理解正确的一项是？", options:["A. 运用比喻，表现人物外貌美丽","B. 运用拟人，突出季节特征","C. 运用比喻，生动写出笑容的温暖感染力，暗示人物内心的善良","D. 运用夸张，强调笑容灿烂"], correct:"C", explain:"结尾作用：点明主旨，比喻展现温暖形象。" },
+        { id:9, type:"fill", text:"维度补全：环境描写“暮色四合，远山的轮廓渐渐模糊，村庄亮起了零星的灯火。”<br>①渲染了______的气氛；②烘托了人物______的心情；③为下文______作铺垫。", answer:"宁静/朦胧；归家的期盼/淡淡惆怅；归家/离别", tip:"环境描写四件套", blank:true },
+        { id:10, type:"choice", text:"“那棵老槐树静静地站在村口，像一位守望者。”这句话主要运用了什么手法？", options:["A. 比喻，表现树的古老","B. 拟人，赋予树人的情态，表现坚守与等待","C. 夸张，突出树的高大","D. 对比，突出树的孤独"], correct:"B", explain:"拟人：静静站、守望者→赋予人的情感。" },
+        { id:11, type:"fill", text:"补全标题含义分析：《故乡的瓦》<br>表层含义：______<br>深层含义：______<br>主旨：______", answer:"故乡屋顶的瓦片；对故乡的眷恋与童年回忆；表达思乡之情", tip:"标题含义题标准答法", blank:true },
+        { id:12, type:"choice", text:"文中三次出现“那盏灯”，这种写法属于？", options:["A. 设置悬念","B. 欲扬先抑","C. 线索","D. 托物言志"], correct:"C", explain:"反复出现的物象往往是线索。" },
+        { id:13, type:"fill", text:"赏析：“时间在他的额头上刻下了深深的沟壑。”<br>手法：______<br>表达效果：生动形象地写出了______，表现了______。", answer:"比喻/拟人；岁月沧桑/辛劳；对父亲的疼惜", tip:"沟壑比喻皱纹，拟人化“刻下”", blank:true },
+        { id:14, type:"choice", text:"“突然，一道闪电划破长空，雷声滚滚而来。”在小说中，这样的环境描写最可能的作用是？", options:["A. 表现天气恶劣","B. 暗示情节转折或矛盾激化","C. 渲染宁静气氛","D. 表现人物悠闲"], correct:"B", explain:"环境描写推动情节，暗示变故。" },
+        { id:15, type:"fill", text:"请补全段落作用分析：<br>第②段详细描写了老街的青石板路和斑驳的墙壁。<br>结构上：______<br>内容上：______", answer:"为下文回忆往事作铺垫；渲染古朴氛围，奠定怀旧基调", tip:"段落作用从结构和内容两方面答", blank:true },
+        { id:16, type:"choice", text:"下列对“他站在那里，像一棵被风吹弯的树”理解最恰当的是？", options:["A. 表现他身材高大","B. 运用比喻，写出他历经磨难仍坚韧不屈","C. 写出他身体虚弱","D. 表现他孤独无助"], correct:"B", explain:"树被吹弯但仍站立→象征坚韧。" },
+        { id:17, type:"fill", text:"维度补全：文章第①段“那年春天，桃花开得格外灿烂”<br>①渲染了______气氛；②与后文______形成对比；③突出了______。", answer:"美好/生机勃勃；悲伤结局/离别；反衬情感", tip:"以乐景写哀情", blank:true },
+        { id:18, type:"choice", text:"下列对文章内容理解错误的一项是？", options:["A. 环境描写往往烘托人物心情","B. 标题可以设置悬念，吸引读者","C. 所有景物描写都是为了写景而写景","D. 反复出现的物象往往是线索"], correct:"C", explain:"景物描写服务于人物和主旨，不能为了写景而写景。" },
+        { id:19, type:"fill", text:"赏析句子：“月光如水，静静地泻在庭院里，叶影斑驳。”<br>手法：______<br>内容：写出月光的______和庭院的______<br>情感：表现了作者的______。", answer:"比喻；皎洁/柔和；静谧/幽美；宁静/喜爱", tip:"比喻+静谧氛围", blank:true }
+    ];
+    let wrongSet = new Set(); let answers = new Array(questions.length).fill(null); let wrongFlag = new Array(questions.length).fill(false);
+    function loadWrong(){ let w = localStorage.getItem("gk_chinese_wrong_set_v2"); if(w) { try{ wrongSet = new Set(JSON.parse(w)); }catch(e){} } updateWrongUI(); }
+    function saveWrong(){ localStorage.setItem("gk_chinese_wrong_set_v2", JSON.stringify([...wrongSet])); updateWrongUI(); }
+    function addWrong(id){ if(!wrongSet.has(id)){ wrongSet.add(id); saveWrong(); } }
+    function removeWrong(id){ if(wrongSet.has(id)){ wrongSet.delete(id); saveWrong(); } }
+    function updateWrongUI(){ document.getElementById("wrongCount").innerText = `❌ 错题：${wrongSet.size}`; let listDiv = document.getElementById("wrongList"); if(listDiv){ let arr = [...wrongSet]; listDiv.innerHTML = arr.length===0?"暂无错题":`<ul style="margin-left:16px;">${arr.map(id=>`<li>题号${parseInt(id)+1} <button onclick="removeWrongById('${id}')" style="margin-left:10px; background:#f0d9c7; border:none; border-radius:20px; padding:2px 12px;">移除</button></li>`).join('')}</ul>`; } }
+    window.removeWrongById = function(id){ removeWrong(id); updateWrongUI(); };
+    let currentIndex = 0;
+    function renderQuestion(){
+        let q = questions[currentIndex]; if(!q) return;
+        let container = document.getElementById("questions-container");
+        let isAnswered = answers[currentIndex] !== null;
+        let userAnswer = answers[currentIndex];
+        let isCorrect = isAnswered ? (userAnswer === q.correct) : false;
+        let html = `<div class="question-item"><div class="q-title">第${currentIndex+1}/${questions.length}题 · ${q.type==="choice"?"手法/作用选择题":"维度补全/含义填空题"}</div><div class="question-text">${q.text}</div>`;
+        if(q.type === "choice"){
+            html += `<div class="options" id="opts">${q.options.map((opt,i)=>`<div class="option ${isAnswered && userAnswer===String.fromCharCode(65+i) ? (isCorrect?'selected-correct':'selected-wrong') : ''}" data-val="${String.fromCharCode(65+i)}">${opt}</div>`).join('')}</div>`;
+            if(isAnswered){ html += `<div class="answer" style="display:block;"><strong>📝 答案：</strong> ${q.correct}<br><strong>解析：</strong> ${q.explain}</div>`; }
+            else { html += `<div class="answer" id="ansArea"></div>`; }
+        } else {
+            html += `<textarea class="fill-input" rows="2" id="fillInput" placeholder="填写答案（多个空请用分号隔开）">${userAnswer || ''}</textarea><button class="btn-submit" id="submitBtn">提交答案</button>`;
+            if(q.tip) html += `<div style="font-size:0.7rem; margin-top:6px;">💡 提示：${q.tip}</div>`;
+            if(isAnswered){ html += `<div class="answer" style="display:block;"><strong>📝 标准答案：</strong> ${q.answer}<br><strong>解析：</strong> ${q.explain || (q.tip?q.tip:"请对照参考答案")}</div>`; }
+            else { html += `<div class="answer" id="ansArea"></div>`; }
+            html += `<div id="fbMsg" class="feedback-msg"></div>`;
+        }
+        html += `<button class="mark-btn ${wrongSet.has(String(currentIndex)) ? 'marked' : ''}" onclick="toggleMarkCurrent()">${wrongSet.has(String(currentIndex)) ? '★ 已标记' : '☆ 标记错题'}</button></div>`;
+        container.innerHTML = html;
+        document.getElementById("progressInfo").innerText = `第${currentIndex+1}/${questions.length}题`;
+        if(q.type === "choice" && !isAnswered){
+            document.querySelectorAll(".option").forEach(el => { el.addEventListener("click", () => { let val = el.dataset.val; answers[currentIndex] = val; let isCor = (val === q.correct); if(isCor){ if(!wrongFlag[currentIndex]){ wrongFlag[currentIndex]=false; removeWrong(String(currentIndex)); } } else { addWrong(String(currentIndex)); wrongFlag[currentIndex]=true; } renderQuestion(); }); });
+        }
+        if(q.type !== "choice" && !isAnswered){
+            let btn = document.getElementById("submitBtn"); if(btn) btn.onclick = () => { let inp = document.getElementById("fillInput"); let val = inp.value.trim(); let normalizedVal = val.replace(/[，,；;、\s]/g,'').toLowerCase(); let normalizedAns = q.answer.replace(/[，,；;、\s]/g,'').toLowerCase(); let isCor = (normalizedVal === normalizedAns || val === q.answer); answers[currentIndex] = val; if(isCor){ if(!wrongFlag[currentIndex]){ wrongFlag[currentIndex]=false; removeWrong(String(currentIndex)); } } else { addWrong(String(currentIndex)); wrongFlag[currentIndex]=true; } renderQuestion(); };
+        }
+    }
+    function toggleMarkCurrent(){ if(wrongSet.has(String(currentIndex))){ removeWrong(String(currentIndex)); wrongFlag[currentIndex]=false; } else { addWrong(String(currentIndex)); wrongFlag[currentIndex]=true; } renderQuestion(); }
+    document.getElementById("prevBtn").onclick = () => { if(currentIndex > 0) currentIndex--; renderQuestion(); };
+    document.getElementById("nextBtn").onclick = () => { if(currentIndex < questions.length-1) currentIndex++; renderQuestion(); };
+    document.getElementById("clearWrongBtn").onclick = () => { wrongSet.clear(); for(let i=0;i<questions.length;i++) wrongFlag[i]=false; saveWrong(); renderQuestion(); alert("错题本已清空"); };
+    window.toggleKnowledge = function(el){ let c=el.querySelector('.knowledge-content'); if(c) c.style.display = c.style.display==='none'?'block':'none'; };
+    loadWrong(); renderQuestion();
+</script>
+</body>
+</html>
