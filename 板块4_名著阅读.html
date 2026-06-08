@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>板块四 · 名著阅读 | 手机优化版</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background: #e6f0fa; font-family: system-ui, -apple-system, 'Segoe UI', 'Roboto', 'PingFang SC', sans-serif; padding: 16px 12px 70px; color: #1e293b; }
+        .container { max-width: 700px; margin: 0 auto; }
+        .back-link { display: inline-block; margin-bottom: 16px; background: #d9e8f2; padding: 10px 18px; border-radius: 40px; text-decoration: none; color: #0f5b83; font-weight: 600; font-size: 0.85rem; }
+        .header { background: linear-gradient(135deg, #1e6f9f, #0a4b6e); border-radius: 28px; padding: 20px; margin-bottom: 20px; text-align: center; color: white; }
+        .header h1 { font-size: 1.6rem; margin-bottom: 6px; }
+        .header p { font-size: 0.75rem; opacity: 0.9; }
+        .stats-bar { background: white; border-radius: 60px; padding: 10px 16px; display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 18px; gap: 8px; }
+        .stat-item { background: #f1f5f9; padding: 6px 14px; border-radius: 40px; font-size: 0.7rem; font-weight: 600; color: #1e6f9f; }
+        .card { background: white; border-radius: 28px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .knowledge-box { background: #f1f9fe; border-left: 6px solid #f4c542; border-radius: 20px; padding: 14px 18px; margin-bottom: 20px; cursor: pointer; }
+        .knowledge-content { display: none; padding-top: 12px; font-size: 0.85rem; border-top: 1px solid #cde3ef; margin-top: 8px; line-height: 1.5; }
+        .question-item { margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px dashed #cde3ef; }
+        .q-title { font-weight: 700; margin-bottom: 12px; color: #1e6f9f; background: #f0f7fc; padding: 8px 14px; border-radius: 24px; display: inline-block; font-size: 0.8rem; }
+        .question-text { font-size: 1rem; margin: 12px 0; line-height: 1.5; font-weight: 500; }
+        .options { display: flex; flex-direction: column; gap: 12px; margin: 12px 0; }
+        .option { background: #f9fbfd; border: 1.5px solid #dce5f0; border-radius: 60px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: 0.1s; min-height: 56px; font-size: 0.9rem; }
+        .option.selected-correct { background: #c8f0d1; border-color: #2e7d32; }
+        .option.selected-wrong { background: #ffdede; border-color: #c62828; }
+        .fill-input { width: 100%; border: 1.5px solid #dce5f0; border-radius: 60px; padding: 14px 18px; font-size: 0.95rem; margin-bottom: 12px; }
+        .btn-submit { background: #eef3fc; border: none; padding: 12px 20px; border-radius: 60px; font-size: 0.85rem; font-weight: 600; color: #0f5b83; cursor: pointer; margin-top: 8px; min-height: 48px; }
+        .answer { display: none; background: #f8fbfe; padding: 14px 18px; border-radius: 20px; margin-top: 14px; border-left: 4px solid #1e6f9f; font-size: 0.85rem; line-height: 1.5; }
+        .feedback-msg { font-size: 0.8rem; margin-top: 8px; color: #c26b1a; }
+        .mark-btn { background: none; border: 1px solid #b9cfdf; padding: 8px 14px; border-radius: 40px; font-size: 0.7rem; cursor: pointer; margin-left: 10px; min-height: 40px; }
+        .mark-btn.marked { background: #f4c542; border-color: #e0a800; }
+        .wrong-notes { background: #fff6e8; border-radius: 28px; padding: 18px; margin-top: 30px; }
+        .wrong-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+        .nav-buttons { display: flex; justify-content: space-between; gap: 12px; margin: 20px 0; }
+        .nav-btn { background: #eef2f6; border: none; padding: 12px 20px; border-radius: 60px; font-weight: 600; font-size: 0.85rem; cursor: pointer; flex: 1; text-align: center; min-height: 48px; }
+        .nav-btn-primary { background: #1e6f9f; color: white; }
+        .progress { font-size: 0.7rem; color: #5a6e7c; text-align: center; margin-top: 10px; }
+        @media (max-width: 480px) { .option { padding: 10px 14px; } .btn-submit, .nav-btn { padding: 10px 12px; } }
+        @media print { .btn-submit, .mark-btn, .nav-btn, .knowledge-box, .wrong-notes, .back-link, .stats-bar { display: none; } .answer { display: block !important; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="index.html" class="back-link">← 返回索引主页</a>
+    <div class="header"><h1>📘 板块四 · 名著阅读</h1><p>人物匹配 | 情节填空 | 主题选择 | 12部名著全覆盖</p></div>
+    <div class="stats-bar"><span class="stat-item">📊 总题数：20</span><span class="stat-item" id="wrongCount">❌ 错题：0</span></div>
+    <div class="card">
+        <div class="knowledge-box" onclick="toggleKnowledge(this)"><div class="q-title" style="background:none; padding:0;">📌 方法论 · 名著破题法（点击展开）</div><div class="knowledge-content"><p>✦ <strong>人物分析公式：</strong> 性格词 + 结合具体情节。例：“孙悟空机智勇敢，三调芭蕉扇体现智慧”</p><p>✦ <strong>成长脉络法：</strong> 按阶段梳理人物变化（保尔：少年→战士→筑路→写作）</p><p>✦ <strong>主题关键词：</strong> 《红星》→纪实与希望；《昆虫记》→科学与文学；《儒林外史》→讽刺科举</p><p>✦ <strong>12部必读名著：</strong> 《朝花夕拾》《西游记》《骆驼祥子》《海底两万里》《红星照耀中国》《昆虫记》《钢铁是怎样炼成的》《傅雷家书》《水浒传》《儒林外史》《简·爱》《格列佛游记》</p></div></div>
+    </div>
+    <div id="questions-container"></div>
+    <div class="nav-buttons"><button id="prevBtn" class="nav-btn">◀ 上一题</button><button id="nextBtn" class="nav-btn nav-btn-primary">下一题 ▶</button></div>
+    <div class="progress" id="progressInfo">第1/20题</div>
+    <div class="wrong-notes" id="wrongPanel"><div class="wrong-header"><strong>📌 我的错题本</strong><button id="clearWrongBtn" style="background:#f0d9c7; border:none; border-radius:30px; padding:6px 16px;">清空错题</button></div><div id="wrongList">暂无错题</div></div>
+</div>
+<script>
+    // 20道名著阅读题（人物匹配8 + 情节填空6 + 主题选择6）
+    const questions = [
+        { id:0, type:"choice", text:"《西游记》中，孙悟空被如来佛祖封为“斗战胜佛”是在哪个情节之后？", options:["A. 大闹天宫","B. 三打白骨精","C. 真假美猴王","D. 取得真经之后"], correct:"D", explain:"取经成功后，孙悟空因保护唐僧有功被封为斗战胜佛，体现成长与皈依。" },
+        { id:1, type:"fill", text:"《朝花夕拾》中，鲁迅回忆的那位正直、热诚、没有民族偏见的老师是______。", answer:"藤野先生", tip:"《藤野先生》篇目核心人物", blank:false },
+        { id:2, type:"choice", text:"《水浒传》中，“拳打镇关西”“大闹野猪林”的人物是？", options:["A. 林冲","B. 武松","C. 鲁智深","D. 李逵"], correct:"C", explain:"鲁智深粗中有细，路见不平。" },
+        { id:3, type:"fill", text:"《钢铁是怎样炼成的》中，保尔在全身瘫痪、双目失明后，创作的小说名为《______》。", answer:"暴风雨所诞生的", tip:"保尔以笔为武器，延续钢铁意志", blank:false },
+        { id:4, type:"choice", text:"下列哪项不是《简·爱》中简·爱拒绝罗切斯特的原因？", options:["A. 发现罗切斯特已有疯妻","B. 为了维护自己的尊严和独立人格","C. 不爱罗切斯特了","D. 不愿违背道德和法律"], correct:"C", explain:"简·爱深爱罗切斯特，离开是为了尊严。" },
+        { id:5, type:"fill", text:"《红星照耀中国》的作者是美国记者______。", answer:"埃德加·斯诺", tip:"纪实文学，向世界介绍红色中国", blank:false },
+        { id:6, type:"choice", text:"《昆虫记》中，法布尔将蝉比喻为？", options:["A. 勤劳的清洁工","B. 歌唱家","C. 残忍的杀手","D. 地下潜伏者"], correct:"B", explain:"蝉在地下四年，阳光下歌唱，法布尔赞其歌唱家。" },
+        { id:7, type:"fill", text:"《儒林外史》中，因中举喜极而疯的人物是______；临终前因两根灯草不肯断气的是______。（用分号隔开）", answer:"范进；严监生", tip:"讽刺科举与守财的两个经典形象", blank:false },
+        { id:8, type:"choice", text:"《骆驼祥子》中，祥子“三起三落”的最终结局是？", options:["A. 成功买车成为车厂主","B. 与虎妞幸福生活","C. 堕落成行尸走肉","D. 回到农村重新开始"], correct:"C", explain:"祥子被旧社会摧残，最终彻底堕落。" },
+        { id:9, type:"fill", text:"《海底两万里》中，尼摩船长驾驶的潜水艇名叫“______号”。", answer:"鹦鹉螺", tip:"诺第留斯号/鹦鹉螺号", blank:false },
+        { id:10, type:"choice", text:"下列对《傅雷家书》理解正确的一项是？", options:["A. 傅雷只关心傅聪的艺术成就","B. 傅雷教导儿子“先为人，次为艺术家”","C. 傅雷家书主要讨论政治问题","D. 傅雷对儿子从不批评"], correct:"B", explain:"傅雷强调德艺双馨，做人是第一位的。" },
+        { id:11, type:"fill", text:"《艾青诗选》中，诗人常用“太阳”和“______”两个核心意象表达对光明与希望的追求。", answer:"土地", tip:"土地象征苦难与希望", blank:false },
+        { id:12, type:"choice", text:"《格列佛游记》中，格列佛在大人国向国王介绍英国制度，国王的反应是？", options:["A. 大加赞赏","B. 虚心学习","C. 嗤之以鼻，批评其腐败","D. 无动于衷"], correct:"C", explain:"斯威夫特借大人国国王之口讽刺英国政治。" },
+        { id:13, type:"fill", text:"《水浒传》中，林冲的绰号是“______”，他的性格经历了从忍辱负重到______的转变。", answer:"豹子头；反抗", tip:"风雪山神庙是转折点", blank:false },
+        { id:14, type:"choice", text:"《简·爱》中，简·爱在洛伍德学校最好的朋友是？", options:["A. 海伦·彭斯","B. 布兰奇小姐","C. 里德太太","D. 谭波尔小姐"], correct:"A", explain:"海伦教会简·爱宽容与坚强。" },
+        { id:15, type:"fill", text:"《红星照耀中国》中，斯诺笔下的“红小鬼”们体现了______和______的精神。", answer:"乐观；坚定", tip:"红小鬼代表未来希望", blank:false },
+        { id:16, type:"choice", text:"《儒林外史》中，被作者塑造为理想文人形象，淡泊名利、蔑视权贵的是？", options:["A. 范进","B. 严监生","C. 杜少卿","D. 周进"], correct:"C", explain:"杜少卿是作者理想寄托。" },
+        { id:17, type:"fill", text:"《昆虫记》中，法布尔描写螳螂时，既写了它优雅的外表，又写了它______的本性，体现了科学与文学的融合。", answer:"残忍/贪婪", tip:"反差手法，增强文学趣味", blank:false },
+        { id:18, type:"choice", text:"《西游记》中，孙悟空“三打白骨精”后被唐僧驱逐，体现了？", options:["A. 唐僧的昏庸无能","B. 孙悟空的叛逆顽固","C. 取经团队的内部矛盾及孙悟空的委屈与忠诚","D. 白骨精的法力高强"], correct:"C", explain:"悟空虽被误解，仍心系师父。" },
+        { id:19, type:"fill", text:"《钢铁是怎样炼成的》中，保尔的名言：“人最宝贵的是生命，生命每人只有一次。人的一生应当这样度过：当他回忆往事的时候，______，______。”", answer:"不因虚度年华而悔恨；也不因碌碌无为而羞耻", tip:"经典段落，建议背诵，可作作文素材", blank:false }
+    ];
+    let wrongSet = new Set(); let answers = new Array(questions.length).fill(null); let wrongFlag = new Array(questions.length).fill(false);
+    function loadWrong(){ let w = localStorage.getItem("gk_chinese_wrong_set_v2"); if(w) { try{ wrongSet = new Set(JSON.parse(w)); }catch(e){} } updateWrongUI(); }
+    function saveWrong(){ localStorage.setItem("gk_chinese_wrong_set_v2", JSON.stringify([...wrongSet])); updateWrongUI(); }
+    function addWrong(id){ if(!wrongSet.has(id)){ wrongSet.add(id); saveWrong(); } }
+    function removeWrong(id){ if(wrongSet.has(id)){ wrongSet.delete(id); saveWrong(); } }
+    function updateWrongUI(){ document.getElementById("wrongCount").innerText = `❌ 错题：${wrongSet.size}`; let listDiv = document.getElementById("wrongList"); if(listDiv){ let arr = [...wrongSet]; listDiv.innerHTML = arr.length===0?"暂无错题":`<ul style="margin-left:16px;">${arr.map(id=>`<li>题号${parseInt(id)+1} <button onclick="removeWrongById('${id}')" style="margin-left:10px; background:#f0d9c7; border:none; border-radius:20px; padding:2px 12px;">移除</button></li>`).join('')}</ul>`; } }
+    window.removeWrongById = function(id){ removeWrong(id); updateWrongUI(); };
+    let currentIndex = 0;
+    function renderQuestion(){
+        let q = questions[currentIndex]; if(!q) return;
+        let container = document.getElementById("questions-container");
+        let isAnswered = answers[currentIndex] !== null;
+        let userAnswer = answers[currentIndex];
+        let isCorrect = isAnswered ? (userAnswer === q.correct) : false;
+        let html = `<div class="question-item"><div class="q-title">第${currentIndex+1}/${questions.length}题 · ${q.type==="choice"?"人物/主题选择题":"情节填空题"}</div><div class="question-text">${q.text}</div>`;
+        if(q.type === "choice"){
+            html += `<div class="options" id="opts">${q.options.map((opt,i)=>`<div class="option ${isAnswered && userAnswer===String.fromCharCode(65+i) ? (isCorrect?'selected-correct':'selected-wrong') : ''}" data-val="${String.fromCharCode(65+i)}">${opt}</div>`).join('')}</div>`;
+            if(isAnswered){ html += `<div class="answer" style="display:block;"><strong>📝 答案：</strong> ${q.correct}<br><strong>解析：</strong> ${q.explain}</div>`; }
+            else { html += `<div class="answer" id="ansArea"></div>`; }
+        } else {
+            html += `<textarea class="fill-input" rows="2" id="fillInput" placeholder="填写答案（多个空请用分号隔开）">${userAnswer || ''}</textarea><button class="btn-submit" id="submitBtn">提交答案</button>`;
+            if(q.tip) html += `<div style="font-size:0.7rem; margin-top:6px;">💡 提示：${q.tip}</div>`;
+            if(isAnswered){ html += `<div class="answer" style="display:block;"><strong>📝 标准答案：</strong> ${q.answer}<br><strong>解析：</strong> ${q.explain || (q.tip?q.tip:"请对照参考答案")}</div>`; }
+            else { html += `<div class="answer" id="ansArea"></div>`; }
+            html += `<div id="fbMsg" class="feedback-msg"></div>`;
+        }
+        html += `<button class="mark-btn ${wrongSet.has(String(currentIndex)) ? 'marked' : ''}" onclick="toggleMarkCurrent()">${wrongSet.has(String(currentIndex)) ? '★ 已标记' : '☆ 标记错题'}</button></div>`;
+        container.innerHTML = html;
+        document.getElementById("progressInfo").innerText = `第${currentIndex+1}/${questions.length}题`;
+        if(q.type === "choice" && !isAnswered){
+            document.querySelectorAll(".option").forEach(el => { el.addEventListener("click", () => { let val = el.dataset.val; answers[currentIndex] = val; let isCor = (val === q.correct); if(isCor){ if(!wrongFlag[currentIndex]){ wrongFlag[currentIndex]=false; removeWrong(String(currentIndex)); } } else { addWrong(String(currentIndex)); wrongFlag[currentIndex]=true; } renderQuestion(); }); });
+        }
+        if(q.type !== "choice" && !isAnswered){
+            let btn = document.getElementById("submitBtn"); if(btn) btn.onclick = () => { let inp = document.getElementById("fillInput"); let val = inp.value.trim(); let normalizedVal = val.replace(/[，,；;、\s]/g,'').toLowerCase(); let normalizedAns = q.answer.replace(/[，,；;、\s]/g,'').toLowerCase(); let isCor = (normalizedVal === normalizedAns || val === q.answer); answers[currentIndex] = val; if(isCor){ if(!wrongFlag[currentIndex]){ wrongFlag[currentIndex]=false; removeWrong(String(currentIndex)); } } else { addWrong(String(currentIndex)); wrongFlag[currentIndex]=true; } renderQuestion(); };
+        }
+    }
+    function toggleMarkCurrent(){ if(wrongSet.has(String(currentIndex))){ removeWrong(String(currentIndex)); wrongFlag[currentIndex]=false; } else { addWrong(String(currentIndex)); wrongFlag[currentIndex]=true; } renderQuestion(); }
+    document.getElementById("prevBtn").onclick = () => { if(currentIndex > 0) currentIndex--; renderQuestion(); };
+    document.getElementById("nextBtn").onclick = () => { if(currentIndex < questions.length-1) currentIndex++; renderQuestion(); };
+    document.getElementById("clearWrongBtn").onclick = () => { wrongSet.clear(); for(let i=0;i<questions.length;i++) wrongFlag[i]=false; saveWrong(); renderQuestion(); alert("错题本已清空"); };
+    window.toggleKnowledge = function(el){ let c=el.querySelector('.knowledge-content'); if(c) c.style.display = c.style.display==='none'?'block':'none'; };
+    loadWrong(); renderQuestion();
+</script>
+</body>
+</html>
