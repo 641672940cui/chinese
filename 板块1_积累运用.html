@@ -16,6 +16,7 @@
         .stat-item { background: #f1f5f9; padding: 6px 14px; border-radius: 40px; font-size: 0.7rem; font-weight: 600; color: #1e6f9f; }
         .card { background: white; border-radius: 28px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .knowledge-box { background: #f1f9fe; border-left: 6px solid #f4c542; border-radius: 20px; padding: 14px 18px; margin-bottom: 20px; cursor: pointer; }
+        .knowledge-title { font-weight: 700; color: #0f5b83; display: flex; align-items: center; gap: 8px; }
         .knowledge-content { display: none; padding-top: 12px; font-size: 0.85rem; border-top: 1px solid #cde3ef; margin-top: 8px; line-height: 1.5; }
         .question-item { margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px dashed #cde3ef; }
         .q-title { font-weight: 700; margin-bottom: 12px; color: #1e6f9f; background: #f0f7fc; padding: 8px 14px; border-radius: 24px; display: inline-block; font-size: 0.8rem; }
@@ -46,7 +47,15 @@
     <div class="header"><h1>📖 板块一 · 积累与运用</h1><p>理解性默写 | 主题匹配 | 术语转化 | 紧贴广东中考真题</p></div>
     <div class="stats-bar"><span class="stat-item">📊 总题数：20</span><span class="stat-item" id="wrongCount">❌ 错题：0</span></div>
     <div class="card">
-        <div class="knowledge-box" onclick="toggleKnowledge(this)"><div class="q-title" style="background:none; padding:0;">📌 方法论 · 术语密码本（点击展开）</div><div class="knowledge-content"><p>✦ <strong>材料映射法：</strong> 题干关键词 → 定位诗句主题。如“坚定信念”→“长风破浪会有时”</p><p>✦ <strong>神探破案法：</strong> 白话线索（新事物取代旧事物）→ 术语密码“蕴含哲理/新旧交替”</p><p>✦ <strong>维度模板：</strong> 主题识别→诗人→诗句匹配；确保默写零错字</p><p>✦ <strong>易错字警示：</strong> “沧”海、“汗”青、“燕”然、“作”化春泥</p></div></div>
+        <div class="knowledge-box" onclick="toggleKnowledge(this)">
+            <div class="knowledge-title">📌 方法论 · 术语密码本（点击展开）</div>
+            <div class="knowledge-content">
+                <p>✦ <strong>材料映射法：</strong> 题干关键词 → 定位诗句主题。如“坚定信念”→“长风破浪会有时”</p>
+                <p>✦ <strong>神探破案法：</strong> 白话线索（新事物取代旧事物）→ 术语密码“蕴含哲理/新旧交替”</p>
+                <p>✦ <strong>维度模板：</strong> 主题识别→诗人→诗句匹配；确保默写零错字</p>
+                <p>✦ <strong>易错字警示：</strong> “沧”海、“汗”青、“燕”然、“作”化春泥</p>
+            </div>
+        </div>
     </div>
     <div id="questions-container"></div>
     <div class="nav-buttons"><button id="prevBtn" class="nav-btn">◀ 上一题</button><button id="nextBtn" class="nav-btn nav-btn-primary">下一题 ▶</button></div>
@@ -56,70 +65,163 @@
 <script>
     // 20道题（10理解性默写 + 5主题匹配选择 + 5术语转化填空）
     const questions = [
-        { id:0, type:"fill", text:"李白在《行路难》中表达坚定信念、乐观进取的千古名句是：长风破浪会有时，________________。", answer:"直挂云帆济沧海", tip:"注意“济沧”二字，沧不是苍", theme:"志存高远" },
-        { id:1, type:"fill", text:"刘禹锡《酬乐天扬州初逢席上见赠》中蕴含新事物必将取代旧事物哲理的句子是：沉舟侧畔千帆过，________________。", answer:"病树前头万木春", tip:"“春”字不要漏", theme:"哲理思辨" },
-        { id:2, type:"fill", text:"文天祥《过零丁洋》中以死明志、表现民族气节的诗句是：人生自古谁无死？________________。", answer:"留取丹心照汗青", tip:"“汗青”指史册，不是汉", theme:"家国情怀" },
-        { id:3, type:"fill", text:"苏轼《水调歌头》中表达对远方亲人美好祝愿的句子是：但愿人长久，________________。", answer:"千里共婵娟", tip:"“婵娟”易错", theme:"哲理思辨" },
-        { id:4, type:"fill", text:"周敦颐《爱莲说》中描写莲花高洁、不与世俗同流合污的名句是：出淤泥而不染，________________。", answer:"濯清涟而不妖", tip:"“濯清涟”三个字易错", theme:"修身养性" },
-        { id:5, type:"fill", text:"杜甫《望岳》中表现不怕困难、敢于攀登绝顶的诗句是：会当凌绝顶，________________。", answer:"一览众山小", tip:"“览”字写法", theme:"志存高远" },
-        { id:6, type:"fill", text:"龚自珍《己亥杂诗》中表现辞官后仍心系国家的句子是：落红不是无情物，________________。", answer:"化作春泥更护花", tip:"“化作”不是“做”", theme:"家国情怀" },
-        { id:7, type:"fill", text:"王湾《次北固山下》中描写时序交替、蕴含自然理趣的诗句是：海日生残夜，________________。", answer:"江春入旧年", tip:"“入”字", theme:"哲理思辨" },
-        { id:8, type:"fill", text:"陆游《游山西村》中描写绝处逢生、豁然开朗的句子是：山重水复疑无路，________________。", answer:"柳暗花明又一村", tip:"“柳暗花明”", theme:"哲理思辨" },
-        { id:9, type:"fill", text:"范仲淹《岳阳楼记》中表现旷达胸襟和政治抱负的句子是：先天下之忧而忧，________________。", answer:"后天下之乐而乐", tip:"顺序不要颠倒", theme:"家国情怀" },
+        { id:0, type:"fill", text:"李白在《行路难》中表达坚定信念、乐观进取的千古名句是：长风破浪会有时，________________。", answer:"直挂云帆济沧海", tip:"注意“济沧”二字，沧不是苍", explain:"《行路难》全诗表达了李白在仕途受阻后的乐观与自信。“长风破浪会有时，直挂云帆济沧海”是千古名句，展现了诗人不畏艰难、勇往直前的精神。" },
+        { id:1, type:"fill", text:"刘禹锡《酬乐天扬州初逢席上见赠》中蕴含新事物必将取代旧事物哲理的句子是：沉舟侧畔千帆过，________________。", answer:"病树前头万木春", tip:"“春”字不要漏", explain:"这两句诗以“沉舟”“病树”自喻，又以“千帆过”“万木春”象征新事物的蓬勃生机，体现了乐观豁达的人生态度。" },
+        { id:2, type:"fill", text:"文天祥《过零丁洋》中以死明志、表现民族气节的诗句是：人生自古谁无死？________________。", answer:"留取丹心照汗青", tip:"“汗青”指史册，不是汉", explain:"文天祥在狱中写下此诗，“汗青”指史册。这两句诗表现了诗人视死如归的英雄气概和崇高的民族气节。" },
+        { id:3, type:"fill", text:"苏轼《水调歌头》中表达对远方亲人美好祝愿的句子是：但愿人长久，________________。", answer:"千里共婵娟", tip:"“婵娟”易错", explain:"“婵娟”指明月。苏轼在中秋之夜思念弟弟苏辙，写下此句，表达了对天下离别之人的美好祝愿。" },
+        { id:4, type:"fill", text:"周敦颐《爱莲说》中描写莲花高洁、不与世俗同流合污的名句是：出淤泥而不染，________________。", answer:"濯清涟而不妖", tip:"“濯清涟”三个字易错", explain:"这两句生动描绘了莲花从淤泥中长出却不被污染，在清水中洗涤却不显妖媚的特点，象征君子的高洁品格。" },
+        { id:5, type:"fill", text:"杜甫《望岳》中表现不怕困难、敢于攀登绝顶的诗句是：会当凌绝顶，________________。", answer:"一览众山小", tip:"“览”字写法", explain:"诗人登上泰山之巅，俯瞰群山，表达了不畏艰险、勇攀高峰的壮志豪情。" },
+        { id:6, type:"fill", text:"龚自珍《己亥杂诗》中表现辞官后仍心系国家的句子是：落红不是无情物，________________。", answer:"化作春泥更护花", tip:"“化作”不是“做”", explain:"诗人以落花自喻，即使凋零也要化作春泥滋养新花，表达了虽辞官仍心系国家命运的奉献精神。" },
+        { id:7, type:"fill", text:"王湾《次北固山下》中描写时序交替、蕴含自然理趣的诗句是：海日生残夜，________________。", answer:"江春入旧年", tip:"“入”字", explain:"残夜未尽，红日已升；旧年未过，江上已是春意。这两句诗蕴含着新旧交替的自然哲理。" },
+        { id:8, type:"fill", text:"陆游《游山西村》中描写绝处逢生、豁然开朗的句子是：山重水复疑无路，________________。", answer:"柳暗花明又一村", tip:"“柳暗花明”", explain:"诗人在山水中迷路，忽见前方村庄，以此比喻困境中坚持终会迎来转机。" },
+        { id:9, type:"fill", text:"范仲淹《岳阳楼记》中表现旷达胸襟和政治抱负的句子是：先天下之忧而忧，________________。", answer:"后天下之乐而乐", tip:"顺序不要颠倒", explain:"这是范仲淹的政治理想，表达了以天下为己任、忧国忧民的高尚情怀。" },
         { id:10, type:"choice", text:"下列哪项诗句最能体现“坚定信念、乐观自信”的精神？", options:["A. 抽刀断水水更流，举杯消愁愁更愁","B. 长风破浪会有时，直挂云帆济沧海","C. 商女不知亡国恨，隔江犹唱后庭花","D. 无可奈何花落去，似曾相识燕归来"], correct:"B", explain:"B出自李白《行路难》，表达乐观自信。A写愁绪，C讽刺，D叹时光。" },
-        { id:11, type:"choice", text:“下列诗句中，表达‘爱国情怀及舍生取义’的是？”, options:["A. 人生自古谁无死？留取丹心照汗青","B. 采菊东篱下，悠然见南山","C. 海内存知己，天涯若比邻","D. 兴，百姓苦；亡，百姓苦"], correct:"A", explain:"A文天祥《过零丁洋》表现民族气节。B归隐，C友情，D百姓疾苦但非舍生取义。" },
-        { id:12, type:"choice", text:“以下描写‘高洁不染，不与世俗同流合污’的名句出自《爱莲说》，正确选项是？”, options:["A. 香远益清，亭亭净植","B. 出淤泥而不染，濯清涟而不妖","C. 中通外直，不蔓不枝","D. 莲，花之君子者也"], correct:"B", explain:"B直接体现高洁不染。A写香气，C写外形，D是判断句。" },
-        { id:13, type:"choice", text:“表现‘时序交替，蕴含自然理趣’的诗句是？”, options:["A. 海日生残夜，江春入旧年","B. 大漠孤烟直，长河落日圆","C. 月下飞天镜，云生结海楼","D. 乱花渐欲迷人眼，浅草才能没马蹄"], correct:"A", explain:"A王湾《次北固山下》写新旧交替哲理。B边塞，C写景，D早春。" },
-        { id:14, type:"choice", text:“下列哪项最能体现‘无私奉献’精神？”, options:["A. 春蚕到死丝方尽，蜡炬成灰泪始干","B. 长风破浪会有时，直挂云帆济沧海","C. 山回路转不见君，雪上空留马行处","D. 大漠沙如雪，燕山月似钩"], correct:"A", explain:"A李商隐名句常喻奉献。B乐观自信，C送别，D边塞景色。" },
-        { id:15, type:"fill", text:“白话描述：‘作者不直接说心情，而是通过描写阴雨连绵的天气来暗示内心的忧愁。’请转化为写作术语：______”, answer:"借景抒情", tip:"写景+抒情=借景抒情", blank:true },
-        { id:16, type:"fill", text:“白话描述：‘文章以“老槐树”为线索，贯穿全文，串联起几代人的故事。’术语：______”, answer:"线索", tip:"反复出现、串联故事→线索", blank:true },
-        { id:17, type:"fill", text:“白话描述：‘把甲事物比作乙事物，两者有相似点，使表达更生动。’术语：______”, answer:"比喻", tip:"“像”“仿佛”标志词", blank:true },
-        { id:18, type:"fill", text:“白话描述：‘把物当作人来写，赋予它人的动作或情感。’术语：______”, answer:"拟人", tip:"赋予物人的特征", blank:true },
-        { id:19, type:"fill", text:“白话描述：‘在文章开头提出疑问，吸引读者往下读。’术语：______”, answer:"设置悬念", tip:"开头提问+吸引读者", blank:true }
+        { id:11, type:"choice", text:"下列诗句中，表达‘爱国情怀及舍生取义’的是？", options:["A. 人生自古谁无死？留取丹心照汗青","B. 采菊东篱下，悠然见南山","C. 海内存知己，天涯若比邻","D. 兴，百姓苦；亡，百姓苦"], correct:"A", explain:"A文天祥《过零丁洋》表现民族气节。B归隐，C友情，D百姓疾苦但非舍生取义。" },
+        { id:12, type:"choice", text:"以下描写‘高洁不染，不与世俗同流合污’的名句出自《爱莲说》，正确选项是？", options:["A. 香远益清，亭亭净植","B. 出淤泥而不染，濯清涟而不妖","C. 中通外直，不蔓不枝","D. 莲，花之君子者也"], correct:"B", explain:"B直接体现高洁不染。A写香气，C写外形，D是判断句。" },
+        { id:13, type:"choice", text:"表现‘时序交替，蕴含自然理趣’的诗句是？", options:["A. 海日生残夜，江春入旧年","B. 大漠孤烟直，长河落日圆","C. 月下飞天镜，云生结海楼","D. 乱花渐欲迷人眼，浅草才能没马蹄"], correct:"A", explain:"A王湾《次北固山下》写新旧交替哲理。B边塞，C写景，D早春。" },
+        { id:14, type:"choice", text:"下列哪项最能体现‘无私奉献’精神？", options:["A. 春蚕到死丝方尽，蜡炬成灰泪始干","B. 长风破浪会有时，直挂云帆济沧海","C. 山回路转不见君，雪上空留马行处","D. 大漠沙如雪，燕山月似钩"], correct:"A", explain:"A李商隐名句常喻奉献。B乐观自信，C送别，D边塞景色。" },
+        { id:15, type:"blank", text:"白话描述：“作者不直接说心情，而是通过描写阴雨连绵的天气来暗示内心的忧愁。”请转化为写作术语：______", answer:"借景抒情", tip:"写景+抒情=借景抒情", explain:"借景抒情是指作者通过描写景物来抒发内心情感，使抽象的情感变得具体可感。" },
+        { id:16, type:"blank", text:"白话描述：“文章以‘老槐树’为线索，贯穿全文，串联起几代人的故事。”术语：______", answer:"线索", tip:"反复出现、串联故事→线索", explain:"线索是贯穿文章始终的脉络，可以是人、物、事件或情感，使文章结构更加紧凑。" },
+        { id:17, type:"blank", text:"白话描述：“把甲事物比作乙事物，两者有相似点，使表达更生动。”术语：______", answer:"比喻", tip:"“像”“仿佛”标志词", explain:"比喻是利用不同事物之间的相似点进行比拟的修辞手法，使表达更加形象生动。" },
+        { id:18, type:"blank", text:"白话描述：“把物当作人来写，赋予它人的动作或情感。”术语：______", answer:"拟人", tip:"赋予物人的特征", explain:"拟人是将事物人格化的修辞手法，使描写更具感染力和表现力。" },
+        { id:19, type:"blank", text:"白话描述：“在文章开头提出疑问，吸引读者往下读。”术语：______", answer:"设置悬念", tip:"开头提问+吸引读者", explain:"设置悬念是在文章开头或情节发展中设置疑问或矛盾，激发读者的阅读兴趣。" }
     ];
-    let wrongSet = new Set(); let answers = new Array(questions.length).fill(null); let wrongFlag = new Array(questions.length).fill(false);
-    function loadWrong(){ let w = localStorage.getItem("gk_chinese_wrong_set_v2"); if(w) { try{ wrongSet = new Set(JSON.parse(w)); }catch(e){} } updateWrongUI(); }
-    function saveWrong(){ localStorage.setItem("gk_chinese_wrong_set_v2", JSON.stringify([...wrongSet])); updateWrongUI(); }
-    function addWrong(id){ if(!wrongSet.has(id)){ wrongSet.add(id); saveWrong(); } }
-    function removeWrong(id){ if(wrongSet.has(id)){ wrongSet.delete(id); saveWrong(); } }
-    function updateWrongUI(){ document.getElementById("wrongCount").innerText = `❌ 错题：${wrongSet.size}`; let listDiv = document.getElementById("wrongList"); if(listDiv){ let arr = [...wrongSet]; listDiv.innerHTML = arr.length===0?"暂无错题":`<ul style="margin-left:16px;">${arr.map(id=>`<li>题号${parseInt(id)+1} <button onclick="removeWrongById('${id}')" style="margin-left:10px; background:#f0d9c7; border:none; border-radius:20px; padding:2px 12px;">移除</button></li>`).join('')}</ul>`; } }
-    window.removeWrongById = function(id){ removeWrong(id); updateWrongUI(); };
+    // 状态管理
+    let wrongSet = new Set();
+    let answers = new Array(questions.length).fill(null);
+    let wrongFlag = new Array(questions.length).fill(false);
     let currentIndex = 0;
+    // 错题本函数
+    function loadWrong(){ 
+        let w = localStorage.getItem("gk_chinese_wrong_set_v2"); 
+        if(w) { 
+            try{ wrongSet = new Set(JSON.parse(w)); }catch(e){} 
+        } 
+        updateWrongUI(); 
+    }
+    function saveWrong(){ 
+        localStorage.setItem("gk_chinese_wrong_set_v2", JSON.stringify([...wrongSet])); 
+        updateWrongUI(); 
+    }
+    function addWrong(id){ 
+        if(!wrongSet.has(id)){ wrongSet.add(id); saveWrong(); } 
+    }
+    function removeWrong(id){ 
+        if(wrongSet.has(id)){ wrongSet.delete(id); saveWrong(); } 
+    }
+    function updateWrongUI(){ 
+        document.getElementById("wrongCount").innerText = `❌ 错题：${wrongSet.size}`; 
+        let listDiv = document.getElementById("wrongList"); 
+        if(listDiv){ 
+            let arr = [...wrongSet]; 
+            listDiv.innerHTML = arr.length===0?"暂无错题":`<ul style="margin-left:16px;">${arr.map(id=>`<li>题号${parseInt(id)+1} <button onclick="removeWrongById('${id}')" style="margin-left:10px; background:#f0d9c7; border:none; border-radius:20px; padding:2px 12px;">移除</button></li>`).join('')}</ul>`; 
+        } 
+    }
+    window.removeWrongById = function(id){ 
+        removeWrong(id); 
+        updateWrongUI(); 
+    };
+    // 渲染题目
     function renderQuestion(){
-        let q = questions[currentIndex]; if(!q) return;
+        let q = questions[currentIndex]; 
+        if(!q) return;
         let container = document.getElementById("questions-container");
         let isAnswered = answers[currentIndex] !== null;
         let userAnswer = answers[currentIndex];
         let isCorrect = isAnswered ? (userAnswer === q.correct) : false;
-        let html = `<div class="question-item"><div class="q-title">第${currentIndex+1}/${questions.length}题 · ${q.type==="choice"?"主题匹配选择题":(q.blank?"术语转化填空题":"理解性默写填空题")}</div><div class="question-text">${q.text}</div>`;
+        let html = `<div class="question-item">
+            <div class="q-title">第${currentIndex+1}/${questions.length}题 · ${q.type==="choice"?"主题匹配选择题":(q.type==="blank"?"术语转化填空题":"理解性默写填空题")}</div>
+            <div class="question-text">${q.text}</div>`;
         if(q.type === "choice"){
             html += `<div class="options" id="opts">${q.options.map((opt,i)=>`<div class="option ${isAnswered && userAnswer===String.fromCharCode(65+i) ? (isCorrect?'selected-correct':'selected-wrong') : ''}" data-val="${String.fromCharCode(65+i)}">${opt}</div>`).join('')}</div>`;
-            if(isAnswered){ html += `<div class="answer" style="display:block;"><strong>📝 答案：</strong> ${q.correct}<br><strong>解析：</strong> ${q.explain}</div>`; }
-            else { html += `<div class="answer" id="ansArea"></div>`; }
+            if(isAnswered){ 
+                html += `<div class="answer" style="display:block;"><strong>📝 答案：</strong> ${q.correct}<br><strong>解析：</strong> ${q.explain}</div>`; 
+            } else { 
+                html += `<div class="answer" id="ansArea"></div>`; 
+            }
         } else {
             html += `<input type="text" class="fill-input" id="fillInput" placeholder="填写答案" value="${userAnswer || ''}"><button class="btn-submit" id="submitBtn">提交答案</button>`;
-            if(q.tip && !q.blank) html += `<div style="font-size:0.7rem; margin-top:6px;">💡 提示：${q.tip}</div>`;
-            if(isAnswered){ html += `<div class="answer" style="display:block;"><strong>📝 标准答案：</strong> ${q.answer}<br><strong>解析：</strong> ${q.explain || (q.tip?q.tip:"注意易错字")}</div>`; }
-            else { html += `<div class="answer" id="ansArea"></div>`; }
+            if(q.tip) html += `<div style="font-size:0.7rem; margin-top:6px;">💡 提示：${q.tip}</div>`;
+            if(isAnswered){ 
+                html += `<div class="answer" style="display:block;"><strong>📝 标准答案：</strong> ${q.answer}<br><strong>解析：</strong> ${q.explain || (q.tip?q.tip:"注意易错字")}</div>`; 
+            } else { 
+                html += `<div class="answer" id="ansArea"></div>`; 
+            }
             html += `<div id="fbMsg" class="feedback-msg"></div>`;
         }
-        html += `<button class="mark-btn" data-qid="${currentIndex}" onclick="toggleMarkCurrent()">${wrongSet.has(String(currentIndex)) ? '★ 已标记' : '☆ 标记错题'}</button></div>`;
+        html += `<button class="mark-btn ${wrongSet.has(String(currentIndex)) ? 'marked' : ''}" onclick="toggleMarkCurrent()">${wrongSet.has(String(currentIndex)) ? '★ 已标记' : '☆ 标记错题'}</button></div>`;
         container.innerHTML = html;
         document.getElementById("progressInfo").innerText = `第${currentIndex+1}/${questions.length}题`;
+        // 绑定选择题事件
         if(q.type === "choice" && !isAnswered){
-            document.querySelectorAll(".option").forEach(el => { el.addEventListener("click", () => { let val = el.dataset.val; answers[currentIndex] = val; let isCor = (val === q.correct); if(isCor){ if(!wrongFlag[currentIndex]){ wrongFlag[currentIndex]=false; removeWrong(String(currentIndex)); } } else { addWrong(String(currentIndex)); wrongFlag[currentIndex]=true; } renderQuestion(); }); });
+            document.querySelectorAll(".option").forEach(el => { 
+                el.addEventListener("click", () => { 
+                    let val = el.dataset.val; 
+                    answers[currentIndex] = val; 
+                    let isCor = (val === q.correct); 
+                    if(isCor){ 
+                        if(!wrongFlag[currentIndex]){ wrongFlag[currentIndex]=false; removeWrong(String(currentIndex)); } 
+                    } else { 
+                        addWrong(String(currentIndex)); wrongFlag[currentIndex]=true; 
+                    } 
+                    renderQuestion(); 
+                }); 
+            });
         }
+        // 绑定填空题事件
         if(q.type !== "choice" && !isAnswered){
-            let btn = document.getElementById("submitBtn"); if(btn) btn.onclick = () => { let inp = document.getElementById("fillInput"); let val = inp.value.trim(); let normalizedVal = val.replace(/[，,；;、\s]/g,'').toLowerCase(); let normalizedAns = q.answer.replace(/[，,；;、\s]/g,'').toLowerCase(); let isCor = (normalizedVal === normalizedAns || val === q.answer); answers[currentIndex] = val; if(isCor){ if(!wrongFlag[currentIndex]){ wrongFlag[currentIndex]=false; removeWrong(String(currentIndex)); } } else { addWrong(String(currentIndex)); wrongFlag[currentIndex]=true; } renderQuestion(); };
-            let inp = document.getElementById("fillInput"); if(inp) inp.addEventListener("keypress", (e) => { if(e.key === "Enter") document.getElementById("submitBtn").click(); });
+            let btn = document.getElementById("submitBtn"); 
+            if(btn) btn.onclick = () => { 
+                let inp = document.getElementById("fillInput"); 
+                let val = inp.value.trim(); 
+                let normalizedVal = val.replace(/[，,；;、\s]/g,'').toLowerCase(); 
+                let normalizedAns = q.answer.replace(/[，,；;、\s]/g,'').toLowerCase(); 
+                let isCor = (normalizedVal === normalizedAns || val === q.answer); 
+                answers[currentIndex] = val; 
+                if(isCor){ 
+                    if(!wrongFlag[currentIndex]){ wrongFlag[currentIndex]=false; removeWrong(String(currentIndex)); } 
+                } else { 
+                    addWrong(String(currentIndex)); wrongFlag[currentIndex]=true; 
+                } 
+                renderQuestion(); 
+            };
+            let inp = document.getElementById("fillInput"); 
+            if(inp) inp.addEventListener("keypress", (e) => { if(e.key === "Enter") document.getElementById("submitBtn").click(); });
         }
     }
-    function toggleMarkCurrent(){ if(wrongSet.has(String(currentIndex))){ removeWrong(String(currentIndex)); wrongFlag[currentIndex]=false; } else { addWrong(String(currentIndex)); wrongFlag[currentIndex]=true; } renderQuestion(); }
-    document.getElementById("prevBtn").onclick = () => { if(currentIndex > 0) currentIndex--; renderQuestion(); };
-    document.getElementById("nextBtn").onclick = () => { if(currentIndex < questions.length-1) currentIndex++; renderQuestion(); };
-    document.getElementById("clearWrongBtn").onclick = () => { wrongSet.clear(); for(let i=0;i<questions.length;i++) wrongFlag[i]=false; saveWrong(); renderQuestion(); alert("错题本已清空"); };
-    window.toggleKnowledge = function(el){ let c=el.querySelector('.knowledge-content'); if(c) c.style.display = c.style.display==='none'?'block':'none'; };
-    loadWrong(); renderQuestion();
+    function toggleMarkCurrent(){ 
+        if(wrongSet.has(String(currentIndex))){ 
+            removeWrong(String(currentIndex)); 
+            wrongFlag[currentIndex]=false; 
+        } else { 
+            addWrong(String(currentIndex)); 
+            wrongFlag[currentIndex]=true; 
+        } 
+        renderQuestion(); 
+    }
+    function toggleKnowledge(el){ 
+        let content = el.querySelector('.knowledge-content'); 
+        if(content) {
+            if(content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+            } else {
+                content.style.display = 'none';
+            }
+        }
+    }
+    // 导航按钮
+    document.getElementById("prevBtn").onclick = () => { if(currentIndex > 0){ currentIndex--; renderQuestion(); } };
+    document.getElementById("nextBtn").onclick = () => { if(currentIndex < questions.length-1){ currentIndex++; renderQuestion(); } };
+    document.getElementById("clearWrongBtn").onclick = () => { 
+        wrongSet.clear(); 
+        for(let i=0;i<questions.length;i++) wrongFlag[i]=false; 
+        saveWrong(); 
+        renderQuestion(); 
+        alert("错题本已清空"); 
+    };
+    // 初始化
+    loadWrong(); 
+    renderQuestion();
 </script>
 </body>
 </html>
