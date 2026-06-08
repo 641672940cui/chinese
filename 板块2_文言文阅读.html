@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>板块二 · 文言文阅读 | 手机优化版</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background: #e6f0fa; font-family: system-ui, -apple-system, 'Segoe UI', 'Roboto', 'PingFang SC', sans-serif; padding: 16px 12px 70px; color: #1e293b; }
+        .container { max-width: 700px; margin: 0 auto; }
+        .back-link { display: inline-block; margin-bottom: 16px; background: #d9e8f2; padding: 10px 18px; border-radius: 40px; text-decoration: none; color: #0f5b83; font-weight: 600; font-size: 0.85rem; }
+        .header { background: linear-gradient(135deg, #1e6f9f, #0a4b6e); border-radius: 28px; padding: 20px; margin-bottom: 20px; text-align: center; color: white; }
+        .header h1 { font-size: 1.6rem; margin-bottom: 6px; }
+        .header p { font-size: 0.75rem; opacity: 0.9; }
+        .stats-bar { background: white; border-radius: 60px; padding: 10px 16px; display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 18px; gap: 8px; }
+        .stat-item { background: #f1f5f9; padding: 6px 14px; border-radius: 40px; font-size: 0.7rem; font-weight: 600; color: #1e6f9f; }
+        .card { background: white; border-radius: 28px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .knowledge-box { background: #f1f9fe; border-left: 6px solid #f4c542; border-radius: 20px; padding: 14px 18px; margin-bottom: 20px; cursor: pointer; }
+        .knowledge-content { display: none; padding-top: 12px; font-size: 0.85rem; border-top: 1px solid #cde3ef; margin-top: 8px; line-height: 1.5; }
+        .question-item { margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px dashed #cde3ef; }
+        .q-title { font-weight: 700; margin-bottom: 12px; color: #1e6f9f; background: #f0f7fc; padding: 8px 14px; border-radius: 24px; display: inline-block; font-size: 0.8rem; }
+        .question-text { font-size: 1rem; margin: 12px 0; line-height: 1.5; font-weight: 500; }
+        .options { display: flex; flex-direction: column; gap: 12px; margin: 12px 0; }
+        .option { background: #f9fbfd; border: 1.5px solid #dce5f0; border-radius: 60px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: 0.1s; min-height: 56px; font-size: 0.9rem; }
+        .option.selected-correct { background: #c8f0d1; border-color: #2e7d32; }
+        .option.selected-wrong { background: #ffdede; border-color: #c62828; }
+        .fill-input { width: 100%; border: 1.5px solid #dce5f0; border-radius: 60px; padding: 14px 18px; font-size: 0.95rem; margin-bottom: 12px; }
+        .btn-submit { background: #eef3fc; border: none; padding: 12px 20px; border-radius: 60px; font-size: 0.85rem; font-weight: 600; color: #0f5b83; cursor: pointer; margin-top: 8px; min-height: 48px; }
+        .answer { display: none; background: #f8fbfe; padding: 14px 18px; border-radius: 20px; margin-top: 14px; border-left: 4px solid #1e6f9f; font-size: 0.85rem; line-height: 1.5; }
+        .feedback-msg { font-size: 0.8rem; margin-top: 8px; color: #c26b1a; }
+        .mark-btn { background: none; border: 1px solid #b9cfdf; padding: 8px 14px; border-radius: 40px; font-size: 0.7rem; cursor: pointer; margin-left: 10px; min-height: 40px; }
+        .mark-btn.marked { background: #f4c542; border-color: #e0a800; }
+        .wrong-notes { background: #fff6e8; border-radius: 28px; padding: 18px; margin-top: 30px; }
+        .wrong-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+        .nav-buttons { display: flex; justify-content: space-between; gap: 12px; margin: 20px 0; }
+        .nav-btn { background: #eef2f6; border: none; padding: 12px 20px; border-radius: 60px; font-weight: 600; font-size: 0.85rem; cursor: pointer; flex: 1; text-align: center; min-height: 48px; }
+        .nav-btn-primary { background: #1e6f9f; color: white; }
+        .progress { font-size: 0.7rem; color: #5a6e7c; text-align: center; margin-top: 10px; }
+        @media (max-width: 480px) { .option { padding: 10px 14px; } .btn-submit, .nav-btn { padding: 10px 12px; } }
+        @media print { .btn-submit, .mark-btn, .nav-btn, .knowledge-box, .wrong-notes, .back-link, .stats-bar { display: none; } .answer { display: block !important; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="index.html" class="back-link">← 返回索引主页</a>
+    <div class="header"><h1>🏛️ 板块二 · 文言文阅读</h1><p>实词解释 | 翻译补全 | 一词多义 | 内容理解</p></div>
+    <div class="stats-bar"><span class="stat-item">📊 总题数：20</span><span class="stat-item" id="wrongCount">❌ 错题：0</span></div>
+    <div class="card">
+        <div class="knowledge-box" onclick="toggleKnowledge(this)"><div class="q-title" style="background:none; padding:0;">📌 方法论 · 文言文破译法（点击展开）</div><div class="knowledge-content"><p>✦ <strong>神探破案法：</strong> 看到课外文言文，先抓“线索词”（人名、地名、官职），再联系课内实词迁移</p><p>✦ <strong>翻译五字诀：</strong> 留、换、补、删、调。重点补充省略主语</p><p>✦ <strong>一词多义维度：</strong> 语境定位 → 本义推测 → 匹配课内例句</p><p>✦ <strong>常考实词：</strong> 薄(迫近)、景(日光)、秀(茂盛)、走(跑)、腰(腰佩)、蕃(多)、祗(只是)</p></div></div>
+    </div>
+    <div id="questions-container"></div>
+    <div class="nav-buttons"><button id="prevBtn" class="nav-btn">◀ 上一题</button><button id="nextBtn" class="nav-btn nav-btn-primary">下一题 ▶</button></div>
+    <div class="progress" id="progressInfo">第1/20题</div>
+    <div class="wrong-notes" id="wrongPanel"><div class="wrong-header"><strong>📌 我的错题本</strong><button id="clearWrongBtn" style="background:#f0d9c7; border:none; border-radius:30px; padding:6px 16px;">清空错题</button></div><div id="wrongList">暂无错题</div></div>
+</div>
+<script>
+    // 20道文言文题目（实词解释+翻译补全+一词多义选择+内容理解）
+    const questions = [
+        { id:0, type:"fill", text:"解释加点字：<br>① <strong>薄</strong>暮冥冥，虎啸猿啼。 薄：______<br>② <strong>春和景明</strong>，波澜不惊。 景：______", answer:"迫近；日光", tip:"薄=迫近（同《岳阳楼记》）；景=日光，不是景色", blank:false },
+        { id:1, type:"fill", text:"翻译句子：“微斯人，吾谁与归？”（《岳阳楼记》）", answer:"如果没有这种人，我同谁一道呢？", tip:"微=如果没有；吾谁与归=宾语前置，与谁归", blank:false },
+        { id:2, type:"choice", text:"下列“之”字用法与其他三项不同的是？", options:["A. 何陋之有","B. 忘路之远近","C. 无丝竹之乱耳","D. 水陆草木之花"], correct:"D", explain:"A/B/C均为宾语前置或主谓之间取消独立性；D为结构助词“的”。" },
+        { id:3, type:"fill", text:"《醉翁亭记》中描写山间朝暮景色的句子是：若夫日出而林霏开，____________。", answer:"云归而岩穴暝", tip:"朝暮景色→云归而岩穴暝", blank:false },
+        { id:4, type:"choice", text:"下列加点词解释有误的一项是？", options:["A. 太守谓谁（为，是）","B. 而不知太守之乐其乐也（以……为乐）","C. 杂然而前陈者（陈述）","D. 树林阴翳（遮盖）"], correct:"C", explain:"陈：摆放，陈列。“陈述”为今义。" },
+        { id:5, type:"fill", text:"《出师表》中，诸葛亮劝谏后主“不宜”做两件事：不宜妄自菲薄，______________。", answer:"引喻失义", tip:"劝谏→不宜引喻失义", blank:false },
+        { id:6, type:"choice", text:"下列“以”字意义相同的一组是？", options:["A. 以中有足乐者（因为） / B. 不以物喜，不以己悲（因为）","C. 以衾拥覆（用） / D. 无从致书以观（来）"], correct:"AB", explain:"AB均为“因为”；C拿/用；D表目的。" },
+        { id:7, type:"fill", text:"《送东阳马生序》中，作者宋濂在寒冬抄书的句子：“天大寒，砚冰坚，手指不可屈伸，____________。”", answer:"弗之怠", tip:"弗之怠=不懈怠", blank:false },
+        { id:8, type:"choice", text:"下列对《马说》理解正确的一项是？", options:["A. 千里马被埋没的根本原因是吃不饱","B. “其真无马邪”表达了作者对千里马的赞美","C. 文章以“伯乐”喻识别人才的人，以“千里马”喻人才","D. “执策而临之”的“策”是名词，指马鞭子"], correct:"C", explain:"A根本原因是不知马；B是反问讽刺；D策是动词‘用鞭子打’。", theme:"托物寓意" },
+        { id:9, type:"fill", text:"《爱莲说》中，与“近朱者赤，近墨者黑”相对比，表现莲花高洁的句子是：出淤泥而不染，______________。", answer:"濯清涟而不妖", tip:"对比衬托，濯清涟而不妖", blank:false },
+        { id:10, type:"choice", text:"下列“而”字表示转折关系的一项是？", options:["A. 温故而知新","B. 学而不思则罔","C. 择其善者而从之","D. 饮少辄醉，而年又最高"], correct:"B", explain:"A顺承；B转折；C顺承；D递进。" },
+        { id:11, type:"fill", text:"《岳阳楼记》中范仲淹表达旷达胸襟的句子是：不以物喜，______________。", answer:"不以己悲", tip:"旷达胸襟→不以己悲", blank:false },
+        { id:12, type:"choice", text:"下列对《醉翁亭记》内容分析不正确的一项是？", options:["A. 全文以“乐”字贯穿，表现“与民同乐”思想","B. “醉翁之意不在酒”指作者借喝酒逃避现实","C. 文章写景由远及近，由宏观到微观","D. 文章运用了21个“也”字，富有韵律"], correct:"B", explain:"醉翁之意在乎山水之间，并非逃避现实。" },
+        { id:13, type:"fill", text:"《孙权劝学》中，表现鲁肃惊叹吕蒙才略大进的句子是：士别三日，______________。", answer:"即更刮目相待", tip:"刮目相待", blank:false },
+        { id:14, type:"choice", text:"下列加点词属于“词类活用”的一项是？", options:["A. 腰白玉之环（腰佩）","B. 主人日再食（每天）","C. 策之不以其道","D. 一食或尽粟一石"], correct:"A", explain:"A名词作动词；B名词作状语；C策名词作动词；D无活用。" },
+        { id:15, type:"fill", text:"《与朱元思书》中总写富春江山水特点的句子是：奇山异水，______________。", answer:"天下独绝", tip:"总写句→天下独绝", blank:false },
+        { id:16, type:"choice", text:"下列哪项不是《得道多助，失道寡助》的中心论点？", options:["A. 天时不如地利","B. 地利不如人和","C. 得道者多助","D. 固国不以山溪之险"], correct:"D", explain:"D为论证过程的分句，中心论点强调人和与得道。" },
+        { id:17, type:"fill", text:"《生于忧患，死于安乐》中，孟子认为造就人才的客观条件是：必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为，所以动心忍性，______________。", answer:"曾益其所不能", tip:"磨砺增长才干→曾益其所不能", blank:false },
+        { id:18, type:"choice", text:"下列对《曹刿论战》理解正确的一项是？", options:["A. 曹刿主动请见，表现他鲁莽冲动","B. “肉食者鄙”讽刺了鲁庄公的无能","C. 曹刿论述“彼竭我盈”是追击的最佳时机","D. 文章详写战争过程，略写论战"], correct:"C", explain:"A表现爱国担当；B讽刺目光短浅；D详写论战略写战争过程。" },
+        { id:19, type:"fill", text:"《邹忌讽齐王纳谏》中，邹忌由家事类推国事的结论是：由此观之，______________。", answer:"王之蔽甚矣", tip:"类推结论→王之蔽甚矣", blank:false }
+    ];
+    let wrongSet = new Set(); let answers = new Array(questions.length).fill(null); let wrongFlag = new Array(questions.length).fill(false);
+    function loadWrong(){ let w = localStorage.getItem("gk_chinese_wrong_set_v2"); if(w) { try{ wrongSet = new Set(JSON.parse(w)); }catch(e){} } updateWrongUI(); }
+    function saveWrong(){ localStorage.setItem("gk_chinese_wrong_set_v2", JSON.stringify([...wrongSet])); updateWrongUI(); }
+    function addWrong(id){ if(!wrongSet.has(id)){ wrongSet.add(id); saveWrong(); } }
+    function removeWrong(id){ if(wrongSet.has(id)){ wrongSet.delete(id); saveWrong(); } }
+    function updateWrongUI(){ document.getElementById("wrongCount").innerText = `❌ 错题：${wrongSet.size}`; let listDiv = document.getElementById("wrongList"); if(listDiv){ let arr = [...wrongSet]; listDiv.innerHTML = arr.length===0?"暂无错题":`<ul style="margin-left:16px;">${arr.map(id=>`<li>题号${parseInt(id)+1} <button onclick="removeWrongById('${id}')" style="margin-left:10px; background:#f0d9c7; border:none; border-radius:20px; padding:2px 12px;">移除</button></li>`).join('')}</ul>`; } }
+    window.removeWrongById = function(id){ removeWrong(id); updateWrongUI(); };
+    let currentIndex = 0;
+    function renderQuestion(){
+        let q = questions[currentIndex]; if(!q) return;
+        let container = document.getElementById("questions-container");
+        let isAnswered = answers[currentIndex] !== null;
+        let userAnswer = answers[currentIndex];
+        let isCorrect = isAnswered ? (userAnswer === q.correct) : false;
+        let html = `<div class="question-item"><div class="q-title">第${currentIndex+1}/${questions.length}题 · ${q.type==="choice"?"选择题":"填空题/翻译题"}</div><div class="question-text">${q.text}</div>`;
+        if(q.type === "choice"){
+            html += `<div class="options" id="opts">${q.options.map((opt,i)=>`<div class="option ${isAnswered && userAnswer===String.fromCharCode(65+i) ? (isCorrect?'selected-correct':'selected-wrong') : ''}" data-val="${String.fromCharCode(65+i)}">${opt}</div>`).join('')}</div>`;
+            if(isAnswered){ html += `<div class="answer" style="display:block;"><strong>📝 答案：</strong> ${q.correct}<br><strong>解析：</strong> ${q.explain}</div>`; }
+            else { html += `<div class="answer" id="ansArea"></div>`; }
+        } else {
+            html += `<textarea class="fill-input" rows="2" id="fillInput" placeholder="填写答案">${userAnswer || ''}</textarea><button class="btn-submit" id="submitBtn">提交答案</button>`;
+            if(q.tip && !q.blank) html += `<div style="font-size:0.7rem; margin-top:6px;">💡 提示：${q.tip}</div>`;
+            if(isAnswered){ html += `<div class="answer" style="display:block;"><strong>📝 标准答案：</strong> ${q.answer}<br><strong>解析：</strong> ${q.explain || (q.tip?q.tip:"注意文言文翻译要点")}</div>`; }
+            else { html += `<div class="answer" id="ansArea"></div>`; }
+            html += `<div id="fbMsg" class="feedback-msg"></div>`;
+        }
+        html += `<button class="mark-btn ${wrongSet.has(String(currentIndex)) ? 'marked' : ''}" onclick="toggleMarkCurrent()">${wrongSet.has(String(currentIndex)) ? '★ 已标记' : '☆ 标记错题'}</button></div>`;
+        container.innerHTML = html;
+        document.getElementById("progressInfo").innerText = `第${currentIndex+1}/${questions.length}题`;
+        if(q.type === "choice" && !isAnswered){
+            document.querySelectorAll(".option").forEach(el => { el.addEventListener("click", () => { let val = el.dataset.val; answers[currentIndex] = val; let isCor = (val === q.correct); if(isCor){ if(!wrongFlag[currentIndex]){ wrongFlag[currentIndex]=false; removeWrong(String(currentIndex)); } } else { addWrong(String(currentIndex)); wrongFlag[currentIndex]=true; } renderQuestion(); }); });
+        }
+        if(q.type !== "choice" && !isAnswered){
+            let btn = document.getElementById("submitBtn"); if(btn) btn.onclick = () => { let inp = document.getElementById("fillInput"); let val = inp.value.trim(); let normalizedVal = val.replace(/[，,；;、\s]/g,'').toLowerCase(); let normalizedAns = q.answer.replace(/[，,；;、\s]/g,'').toLowerCase(); let isCor = (normalizedVal === normalizedAns || val === q.answer); answers[currentIndex] = val; if(isCor){ if(!wrongFlag[currentIndex]){ wrongFlag[currentIndex]=false; removeWrong(String(currentIndex)); } } else { addWrong(String(currentIndex)); wrongFlag[currentIndex]=true; } renderQuestion(); };
+        }
+    }
+    function toggleMarkCurrent(){ if(wrongSet.has(String(currentIndex))){ removeWrong(String(currentIndex)); wrongFlag[currentIndex]=false; } else { addWrong(String(currentIndex)); wrongFlag[currentIndex]=true; } renderQuestion(); }
+    document.getElementById("prevBtn").onclick = () => { if(currentIndex > 0) currentIndex--; renderQuestion(); };
+    document.getElementById("nextBtn").onclick = () => { if(currentIndex < questions.length-1) currentIndex++; renderQuestion(); };
+    document.getElementById("clearWrongBtn").onclick = () => { wrongSet.clear(); for(let i=0;i<questions.length;i++) wrongFlag[i]=false; saveWrong(); renderQuestion(); alert("错题本已清空"); };
+    window.toggleKnowledge = function(el){ let c=el.querySelector('.knowledge-content'); if(c) c.style.display = c.style.display==='none'?'block':'none'; };
+    loadWrong(); renderQuestion();
+</script>
+</body>
+</html>
