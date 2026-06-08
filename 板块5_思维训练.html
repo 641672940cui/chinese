@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>板块五 · 思维训练 | 术语转化专练</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background: #e6f0fa; font-family: system-ui, -apple-system, 'Segoe UI', 'Roboto', 'PingFang SC', sans-serif; padding: 16px 12px 70px; color: #1e293b; }
+        .container { max-width: 700px; margin: 0 auto; }
+        .back-link { display: inline-block; margin-bottom: 16px; background: #d9e8f2; padding: 10px 18px; border-radius: 40px; text-decoration: none; color: #0f5b83; font-weight: 600; font-size: 0.85rem; }
+        .header { background: linear-gradient(135deg, #1e6f9f, #0a4b6e); border-radius: 28px; padding: 20px; margin-bottom: 20px; text-align: center; color: white; }
+        .header h1 { font-size: 1.6rem; margin-bottom: 6px; }
+        .header p { font-size: 0.75rem; opacity: 0.9; }
+        .stats-bar { background: white; border-radius: 60px; padding: 10px 16px; display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 18px; gap: 8px; }
+        .stat-item { background: #f1f5f9; padding: 6px 14px; border-radius: 40px; font-size: 0.7rem; font-weight: 600; color: #1e6f9f; }
+        .card { background: white; border-radius: 28px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .knowledge-box { background: #f1f9fe; border-left: 6px solid #f4c542; border-radius: 20px; padding: 14px 18px; margin-bottom: 20px; cursor: pointer; }
+        .knowledge-content { display: none; padding-top: 12px; font-size: 0.85rem; border-top: 1px solid #cde3ef; margin-top: 8px; line-height: 1.5; }
+        .question-item { margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px dashed #cde3ef; }
+        .q-title { font-weight: 700; margin-bottom: 12px; color: #1e6f9f; background: #f0f7fc; padding: 8px 14px; border-radius: 24px; display: inline-block; font-size: 0.8rem; }
+        .question-text { font-size: 1rem; margin: 12px 0; line-height: 1.5; font-weight: 500; }
+        .options { display: flex; flex-direction: column; gap: 12px; margin: 12px 0; }
+        .option { background: #f9fbfd; border: 1.5px solid #dce5f0; border-radius: 60px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: 0.1s; min-height: 56px; font-size: 0.9rem; }
+        .option.selected-correct { background: #c8f0d1; border-color: #2e7d32; }
+        .option.selected-wrong { background: #ffdede; border-color: #c62828; }
+        .fill-input { width: 100%; border: 1.5px solid #dce5f0; border-radius: 60px; padding: 14px 18px; font-size: 0.95rem; margin-bottom: 12px; }
+        .btn-submit { background: #eef3fc; border: none; padding: 12px 20px; border-radius: 60px; font-size: 0.85rem; font-weight: 600; color: #0f5b83; cursor: pointer; margin-top: 8px; min-height: 48px; }
+        .answer { display: none; background: #f8fbfe; padding: 14px 18px; border-radius: 20px; margin-top: 14px; border-left: 4px solid #1e6f9f; font-size: 0.85rem; line-height: 1.5; }
+        .feedback-msg { font-size: 0.8rem; margin-top: 8px; color: #c26b1a; }
+        .mark-btn { background: none; border: 1px solid #b9cfdf; padding: 8px 14px; border-radius: 40px; font-size: 0.7rem; cursor: pointer; margin-left: 10px; min-height: 40px; }
+        .mark-btn.marked { background: #f4c542; border-color: #e0a800; }
+        .wrong-notes { background: #fff6e8; border-radius: 28px; padding: 18px; margin-top: 30px; }
+        .wrong-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+        .nav-buttons { display: flex; justify-content: space-between; gap: 12px; margin: 20px 0; }
+        .nav-btn { background: #eef2f6; border: none; padding: 12px 20px; border-radius: 60px; font-weight: 600; font-size: 0.85rem; cursor: pointer; flex: 1; text-align: center; min-height: 48px; }
+        .nav-btn-primary { background: #1e6f9f; color: white; }
+        .progress { font-size: 0.7rem; color: #5a6e7c; text-align: center; margin-top: 10px; }
+        @media (max-width: 480px) { .option { padding: 10px 14px; } .btn-submit, .nav-btn { padding: 10px 12px; } }
+        @media print { .btn-submit, .mark-btn, .nav-btn, .knowledge-box, .wrong-notes, .back-link, .stats-bar { display: none; } .answer { display: block !important; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="index.html" class="back-link">← 返回索引主页</a>
+    <div class="header"><h1>🧠 板块五 · 思维训练</h1><p>术语转化专练 | 白话→术语 | 神探破案法 + 维度模板</p></div>
+    <div class="stats-bar"><span class="stat-item">📊 总题数：20</span><span class="stat-item" id="wrongCount">❌ 错题：0</span></div>
+    <div class="card">
+        <div class="knowledge-box" onclick="toggleKnowledge(this)"><div class="q-title" style="background:none; padding:0;">📌 方法论 · 术语密码本（点击展开）</div><div class="knowledge-content"><p>✦ <strong>神探破案法：</strong> 把白话描述（如“自己研发技术”）翻译成术语密码（“自主创新”）。先找线索词，再匹配标准术语。</p><p>✦ <strong>医生看病法：</strong> 先诊断“材料在说什么”——写景？议论？抒情？然后对症下药，开出术语药方。</p><p>✦ <strong>维度模板：</strong> 看主体→看行为→看目标→匹配术语。</p><p>✦ <strong>常考术语库：</strong> 比喻、拟人、排比、借景抒情、托物言志、欲扬先抑、设置悬念、对比、举例论证、道理论证、列数字、打比方</p></div></div>
+    </div>
+    <div id="questions-container"></div>
+    <div class="nav-buttons"><button id="prevBtn" class="nav-btn">◀ 上一题</button><button id="nextBtn" class="nav-btn nav-btn-primary">下一题 ▶</button></div>
+    <div class="progress" id="progressInfo">第1/20题</div>
+    <div class="wrong-notes" id="wrongPanel"><div class="wrong-header"><strong>📌 我的错题本</strong><button id="clearWrongBtn" style="background:#f0d9c7; border:none; border-radius:30px; padding:6px 16px;">清空错题</button></div><div id="wrongList">暂无错题</div></div>
+</div>
+<script>
+    // 20道思维训练题（术语匹配选择10 + 术语转化填空10）
+    const questions = [
+        { id:0, type:"choice", text:"材料：“雨打在上面，声音是脆的，像在敲击编钟。”<br>这段文字最直接运用的修辞手法是？", options:["A. 拟人","B. 比喻","C. 排比","D. 夸张"], correct:"B", explain:"🕵️ 神探破案：出现“像”字标志词 → 比喻修辞。医生看病法：诊断症状“像”，开药方“比喻”。" },
+        { id:1, type:"choice", text:"材料：“他的脸涨得通红，嘴唇微微颤抖，半天说不出话来。”<br>这段文字运用的主要描写方法是？", options:["A. 心理描写","B. 环境描写","C. 神态描写","D. 语言描写"], correct:"C", explain:"🧠 材料映射：脸涨红、嘴唇颤抖 → 面部表情变化 → 神态描写。" },
+        { id:2, type:"choice", text:"材料：“举出典型事例，具体有力地证明了中心论点。”<br>这描述的是哪种论证方法？", options:["A. 道理论证","B. 比喻论证","C. 对比论证","D. 举例论证"], correct:"D", explain:"医生看病法：题干关键词“举出典型事例”→ 举例论证。" },
+        { id:3, type:"choice", text:"材料：“文章开头写对故乡的失望，结尾却表达希望，情感前后形成反差。”<br>这种写法是？", options:["A. 托物言志","B. 欲扬先抑","C. 借景抒情","D. 卒章显志"], correct:"B", explain:"神探破案：先抑（失望）后扬（希望）→ 欲扬先抑。" },
+        { id:4, type:"choice", text:"材料：“使用列数字、作比较等方法，准确具体地说明事物特征。”<br>这属于哪种文体特征？", options:["A. 议论文语言","B. 说明文说明方法","C. 记叙文描写","D. 散文抒情"], correct:"B", explain:"维度模板：列数字、作比较→说明方法。" },
+        { id:5, type:"choice", text:"材料：“用简洁的语言讲述故事，结尾处突然转折，令人意外。”<br>这种结尾方式被称为？", options:["A. 设置悬念","B. 欧·亨利式结尾","C. 首尾呼应","D. 开门见山"], correct:"B", explain:"医生看病法：突然转折、意外结局→欧·亨利式结尾。" },
+        { id:6, type:"choice", text:"材料：“描写了江南水乡的宁静美景，抒发了作者对故乡的思念。”<br>这种表现手法是？", options:["A. 托物言志","B. 借景抒情","C. 直抒胸臆","D. 对比衬托"], correct:"B", explain:"材料映射：写景+抒情→借景抒情。" },
+        { id:7, type:"choice", text:"材料：“将两种相反的事物或观点放在一起比较，突出强调其中一方的特点。”<br>这是哪种手法？", options:["A. 类比","B. 对比","C. 象征","D. 夸张"], correct:"B", explain:"神探破案：相反事物、突出强调→对比。" },
+        { id:8, type:"choice", text:"材料：“通过描写具体的‘背影’来表达深沉的父爱。”<br>这种写法属于？", options:["A. 借景抒情","B. 托物言志","C. 以小见大","D. 欲扬先抑"], correct:"C", explain:"维度模板：小事物（背影）表现大主题（父爱）→以小见大。" },
+        { id:9, type:"choice", text:"材料：“作者引用鲁迅的名言来支撑自己的观点。”<br>这属于议论文中的？", options:["A. 举例论证","B. 道理论证","C. 比喻论证","D. 对比论证"], correct:"B", explain:"医生看病法：引用名人名言→道理论证。" },
+        { id:10, type:"fill", text:"白话描述：“作者不直接说心情，而是通过描写阴雨连绵的天气来暗示内心的忧愁。”<br>请转化为写作术语：______", answer:"借景抒情", tip:"神探破案法：写天气（景）+暗示心情（情）→借景抒情", blank:true },
+        { id:11, type:"fill", text:"白话描述：“文章以‘老槐树’为线索，贯穿全文，串联起几代人的故事。”<br>术语：______", answer:"线索", tip:"材料映射：反复出现、串联故事→线索", blank:true },
+        { id:12, type:"fill", text:"白话描述：“句子读起来朗朗上口，因为结构相似、语气一致的短语重复出现了三次。”<br>术语：______", answer:"排比", tip:"维度模板：结构相似、三次以上→排比", blank:true },
+        { id:13, type:"fill", text:"白话描述：“文章前面花大量篇幅写‘我’对父亲的误解和抱怨，后面才写理解了父爱。”<br>术语：______", answer:"欲扬先抑", tip:"神探破案：先贬低后褒扬→欲扬先抑", blank:true },
+        { id:14, type:"fill", text:"白话描述：“把甲事物比作乙事物，两者有相似点，使表达更生动。”<br>术语：______", answer:"比喻", tip:"医生看病法：诊断“比作”→药方“比喻”", blank:true },
+        { id:15, type:"fill", text:"白话描述：“把物当作人来写，赋予它人的动作或情感。”<br>术语：______", answer:"拟人", tip:"材料映射：物+人的特征→拟人", blank:true },
+        { id:16, type:"fill", text:"白话描述：“结尾用一句话总结全文，点明中心思想。”<br>术语：______", answer:"卒章显志", tip:"维度模板：结尾+点明主旨→卒章显志", blank:true },
+        { id:17, type:"fill", text:"白话描述：“用具体的数据来说明事物的特征，使说明更准确。”<br>术语：______", answer:"列数字", tip:"神探破案：数据→列数字说明方法", blank:true },
+        { id:18, type:"fill", text:"白话描述：“在文章开头提出疑问，吸引读者往下读。”<br>术语：______", answer:"设置悬念", tip:"材料映射：开头提问+吸引读者→设置悬念", blank:true },
+        { id:19, type:"fill", text:"白话描述：“通过写梅花的傲雪绽放，象征君子坚贞不屈的品格。”<br>术语：______", answer:"托物言志", tip:"维度模板：写物（梅花）+象征品格（志）→托物言志", blank:true }
+    ];
+    let wrongSet = new Set(); let answers = new Array(questions.length).fill(null); let wrongFlag = new Array(questions.length).fill(false);
+    function loadWrong(){ let w = localStorage.getItem("gk_chinese_wrong_set_v2"); if(w) { try{ wrongSet = new Set(JSON.parse(w)); }catch(e){} } updateWrongUI(); }
+    function saveWrong(){ localStorage.setItem("gk_chinese_wrong_set_v2", JSON.stringify([...wrongSet])); updateWrongUI(); }
+    function addWrong(id){ if(!wrongSet.has(id)){ wrongSet.add(id); saveWrong(); } }
+    function removeWrong(id){ if(wrongSet.has(id)){ wrongSet.delete(id); saveWrong(); } }
+    function updateWrongUI(){ document.getElementById("wrongCount").innerText = `❌ 错题：${wrongSet.size}`; let listDiv = document.getElementById("wrongList"); if(listDiv){ let arr = [...wrongSet]; listDiv.innerHTML = arr.length===0?"暂无错题":`<ul style="margin-left:16px;">${arr.map(id=>`<li>题号${parseInt(id)+1} <button onclick="removeWrongById('${id}')" style="margin-left:10px; background:#f0d9c7; border:none; border-radius:20px; padding:2px 12px;">移除</button></li>`).join('')}</ul>`; } }
+    window.removeWrongById = function(id){ removeWrong(id); updateWrongUI(); };
+    let currentIndex = 0;
+    function renderQuestion(){
+        let q = questions[currentIndex]; if(!q) return;
+        let container = document.getElementById("questions-container");
+        let isAnswered = answers[currentIndex] !== null;
+        let userAnswer = answers[currentIndex];
+        let isCorrect = isAnswered ? (userAnswer === q.correct) : false;
+        let html = `<div class="question-item"><div class="q-title">第${currentIndex+1}/${questions.length}题 · ${q.type==="choice"?"术语匹配选择题":"术语转化填空题"}</div><div class="question-text">${q.text}</div>`;
+        if(q.type === "choice"){
+            html += `<div class="options" id="opts">${q.options.map((opt,i)=>`<div class="option ${isAnswered && userAnswer===String.fromCharCode(65+i) ? (isCorrect?'selected-correct':'selected-wrong') : ''}" data-val="${String.fromCharCode(65+i)}">${opt}</div>`).join('')}</div>`;
+            if(isAnswered){ html += `<div class="answer" style="display:block;"><strong>📝 答案：</strong> ${q.correct}<br><strong>解析：</strong> ${q.explain}</div>`; }
+            else { html += `<div class="answer" id="ansArea"></div>`; }
+        } else {
+            html += `<input type="text" class="fill-input" id="fillInput" placeholder="填写术语" value="${userAnswer || ''}"><button class="btn-submit" id="submitBtn">提交答案</button>`;
+            if(q.tip) html += `<div style="font-size:0.7rem; margin-top:6px;">💡 提示：${q.tip}</div>`;
+            if(isAnswered){ html += `<div class="answer" style="display:block;"><strong>📝 标准答案：</strong> ${q.answer}<br><strong>解析：</strong> ${q.explain || (q.tip?q.tip:"请对照参考答案")}</div>`; }
+            else { html += `<div class="answer" id="ansArea"></div>`; }
+            html += `<div id="fbMsg" class="feedback-msg"></div>`;
+        }
+        html += `<button class="mark-btn ${wrongSet.has(String(currentIndex)) ? 'marked' : ''}" onclick="toggleMarkCurrent()">${wrongSet.has(String(currentIndex)) ? '★ 已标记' : '☆ 标记错题'}</button></div>`;
+        container.innerHTML = html;
+        document.getElementById("progressInfo").innerText = `第${currentIndex+1}/${questions.length}题`;
+        if(q.type === "choice" && !isAnswered){
+            document.querySelectorAll(".option").forEach(el => { el.addEventListener("click", () => { let val = el.dataset.val; answers[currentIndex] = val; let isCor = (val === q.correct); if(isCor){ if(!wrongFlag[currentIndex]){ wrongFlag[currentIndex]=false; removeWrong(String(currentIndex)); } } else { addWrong(String(currentIndex)); wrongFlag[currentIndex]=true; } renderQuestion(); }); });
+        }
+        if(q.type !== "choice" && !isAnswered){
+            let btn = document.getElementById("submitBtn"); if(btn) btn.onclick = () => { let inp = document.getElementById("fillInput"); let val = inp.value.trim(); let normalizedVal = val.replace(/[，,；;、\s]/g,'').toLowerCase(); let normalizedAns = q.answer.replace(/[，,；;、\s]/g,'').toLowerCase(); let isCor = (normalizedVal === normalizedAns || val === q.answer); answers[currentIndex] = val; if(isCor){ if(!wrongFlag[currentIndex]){ wrongFlag[currentIndex]=false; removeWrong(String(currentIndex)); } } else { addWrong(String(currentIndex)); wrongFlag[currentIndex]=true; } renderQuestion(); };
+        }
+    }
+    function toggleMarkCurrent(){ if(wrongSet.has(String(currentIndex))){ removeWrong(String(currentIndex)); wrongFlag[currentIndex]=false; } else { addWrong(String(currentIndex)); wrongFlag[currentIndex]=true; } renderQuestion(); }
+    document.getElementById("prevBtn").onclick = () => { if(currentIndex > 0) currentIndex--; renderQuestion(); };
+    document.getElementById("nextBtn").onclick = () => { if(currentIndex < questions.length-1) currentIndex++; renderQuestion(); };
+    document.getElementById("clearWrongBtn").onclick = () => { wrongSet.clear(); for(let i=0;i<questions.length;i++) wrongFlag[i]=false; saveWrong(); renderQuestion(); alert("错题本已清空"); };
+    window.toggleKnowledge = function(el){ let c=el.querySelector('.knowledge-content'); if(c) c.style.display = c.style.display==='none'?'block':'none'; };
+    loadWrong(); renderQuestion();
+</script>
+</body>
+</html>
